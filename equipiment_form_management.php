@@ -87,14 +87,12 @@ if (checkLogined() == true) {
                 <article>
                     <form action="functions/FormProcessor.php" method="post" class="" onSubmit="return confirm('Selected forms will be deleted. Are you sure?')">
                         <label for="Delete Form">Action: </label>
-                        <input type="submit" class="actionBtn" name="Delete Form" value="Delete" id="delete_form">
-                        <a id="add_form" class="fancybox" data-fancybox-type="iframe" href="forms/experiment_borrowing.php" style="display:hidden;"></a>
+                        <a id="add_form" class="fancybox" data-fancybox-type="iframe" href="forms/equipiment_borrowing.php" style="display:hidden;"></a>
                         <input type="button" class="actionBtn" value="Add Form" id="add_form" onClick="callFancyBox(this.value);">
                         <br>
                         <br>
                         <table>
                             <tr>
-                                <th><input type="checkbox" class="admin_mem_checkBox" name="all" onClick="check_all(this, 'row_selected[]')"></th>
                                 <th>Apply Time</th>
                                 <th>Form ID</th>
                                 <th>Student IDs</th>
@@ -107,7 +105,6 @@ if (checkLogined() == true) {
                                 ?>
                             
                                 <tr>    
-                                    <td class="narrowCol"><input type="checkbox" class="admin_mem_checkBox" name="row_selected[]" value="<?php echo $row['form_id'] ?>"></td>
                                     <td><?php echo $row['apply_timestamp'] ?></td>
                                     <td><?php echo $row['form_id'] ?></td>
                                     

@@ -139,6 +139,8 @@ if (isset($_SESSION['approved']) && $_SESSION['approved'] == 1) {
                                 var endT = new Date(endTime.value.split(' ').join('T')).getTime() / 1000;
                                 if (endT <= startT)
                                     $("#end_time").css({'background-color': 'red'});
+                                else if(endT>startT && endTime != null)
+                                    $("#end_time").css({'background-color': 'green'});
                             }
         </script>
         <script>

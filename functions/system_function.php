@@ -33,3 +33,10 @@ function statusTranslation($status){
             return "Error";
     }
 }
+function alertEmail($to,$message){
+    $subject = "Asset return alert";
+    //$message = 'Please return the asset Name:'.$asset_name.'ID: '.$asset_id;
+    
+    $headers = "From: deserter617@gmail.com";
+    return mail($to,$subject,$message,$headers);
+}

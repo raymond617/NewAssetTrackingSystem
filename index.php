@@ -1,6 +1,6 @@
 <?php
 require_once ('functions/system_function.php');
-require_once (rootPath() . 'class/Objects.php');
+require_once ('class/Objects.php');
 session_start();
 ?>
 <!doctype html>

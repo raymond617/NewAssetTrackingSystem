@@ -34,9 +34,7 @@ if (checkLogined() == true) {
                         });
                     });
                 </script>
-
                 <style  type="text/css">
-
                     input,label{
                         display:block;
                     }
@@ -73,14 +71,25 @@ if (checkLogined() == true) {
                         margin: 0.5em 1em;
                         float: left;
                     }
+                    nav{
+                        display: block;
+                        overflow:hidden;
+                        margin: 1em;
+                    }
                 </style>
             </head>
             <body>
                 <header class="row">
                     <h1 id="site_logo"><a href="index.php">Laboratory asset tracking system</a></h1>
-                    <h2 id="page_name">Overdue asset management</h2>
+                    <h2 id="page_name">Current lending asset management</h2>
                     <?php include dirname(__FILE__) . "/common_content/login_panel.php"; // div of login panel?>
                 </header>
+                <nav>
+                    <ul>
+                        <li><a href="edit_asset.php">Asset management</a></li>
+                        <li><a href="current_asset_in_lent.php">Current lending asset management</a></li>
+                    </ul>
+                </nav>
                 <?php
                 $formInfoArray = $adminObject->listCurrentAssetInlend();
                 ?>
@@ -88,8 +97,7 @@ if (checkLogined() == true) {
                     <form action="functions/FormProcessor.php" method="post" class="" onSubmit="return confirm('Selected forms will be deleted. Are you sure?')">
                         <label for="Delete Form">Action: </label>
                         <input type="submit" class="actionBtn" name="Delete Form" value="Delete" id="delete_form">
-                        <a id="add_form" class="fancybox" data-fancybox-type="iframe" href="forms/experiment_reservation_form.php" style="display:hidden;"></a>
-                        <input type="button" class="actionBtn" value="Add Form" id="add_form" onClick="callFancyBox(this.value);">
+
                         <br>
                         <br>
                         <table>
@@ -103,29 +111,35 @@ if (checkLogined() == true) {
                                 <th>User IDs</th>
                                 <th>User Name</th>
                                 <th>Email</th>
-                                
                             </tr>
                             <?php
                             foreach ($formInfoArray as $row) {
                                 ?>
-                            
-                                <tr>    
+
+                                <tr <?php if($row['NOW()']>$row['end_time']){echo 'style="background-color:#FF8C8C;"';} 
+                                else if($row['NOW()']>$row['alert_time']){echo 'style="background-color:#FFFDA0;"';}?>>    
                                     <td class="narrowCol"><input type="checkbox" class="admin_mem_checkBox" name="row_selected[]" value="<?php echo $row['form_id'] ?>"></td>
                                     <td><?php echo $row['form_id'] ?></td>
                                     <td><?php echo $row['asset_id'] ?></td>
                                     <td><?php echo $row['name'] ?></td>
                                     <td><?php echo $row['real_start'] ?></td>
                                     <td><?php echo $row['end_time'] ?></td>
-                                    <td><?php foreach($row['user_array'] as $value) echo $value['id'].'<br>' ?></td>
-                                    <td><?php foreach($row['user_array'] as $value) echo $value['username'].'<br>' ?></td>
-                                    <td><?php foreach($row['user_array'] as $value) echo $value['email'].'<br>' ?></td>
-                                    
+                                    <td><?php foreach ($row['user_array'] as $value)
+                        echo $value['id'] . '<br>' ?></td>
+                                    <td><?php foreach ($row['user_array'] as $value)
+                        echo $value['username'] . '<br>' ?></td>
+                                    <td><?php foreach ($row['user_array'] as $value)
+                        echo $value['email'] . '<br>' ?></td>
+
                                     <td>
-                                        <a class="fancybox" data-fancybox-type="iframe" href="forms/editApplForm.php?form_id=<?php echo $row['form_id'] ?>"><?php if($row['status']>=3) echo "Detail"; else echo "Detail or Edit"?></a>
-                                        <a class="fancybox" data-fancybox-type="iframe" href="functions/FormProcessor.php?delete_form=true&form_id=<?php echo $row['form_id'] ?>">Delete</a>
+                                        <a class="fancybox" data-fancybox-type="iframe" href="forms/editApplForm.php?form_id=<?php echo $row['form_id'] ?>">Detail</a>
+                                        <?php if($row['NOW()']>$row['alert_time']){?>
+                                        <a class="fancybox" data-fancybox-type="iframe" href="emailAlert.php?form_id=<?php echo $row['form_id'] ?>&asset_id=<?php echo $row['asset_id'] ?>&asset_name=<?php echo $row['name'] ?>">Send Alert Email</a>
+                                        <?php } ?>
+                                        <!--<a class="fancybox" data-fancybox-type="iframe" href="functions/FormProcessor.php?delete_form=true&form_id=<?php //echo $row['form_id']  ?>">Delete</a>-->
                                     </td>
                                 </tr>
-                            <?php } ?>
+        <?php } ?>
                         </table>
                     </form>
                     <!--///////////////////////-->
@@ -139,11 +153,6 @@ if (checkLogined() == true) {
                     for (var i = 0; i < checkboxs.length; i++) {
                         checkboxs[i].checked = obj.checked;
                     }
-                }
-
-                function callFancyBox(val)
-                {
-                    $('#add_form').trigger('click');
                 }
             </script>
 

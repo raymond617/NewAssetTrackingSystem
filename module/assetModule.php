@@ -137,7 +137,7 @@ WHERE asset_id =?');
 }
 function getCurrentAssetInTime(){
     global $pdo;
-    $stmt = $pdo->prepare('SELECT f. * , a.name
+    $stmt = $pdo->prepare('SELECT f. * , a.name,DATE_SUB(f.end_time,INTERVAL a.days_b4_alert DAY) as alert_time,NOW()
 FROM form_r_asset f, assets a
 WHERE a.asset_id = f.asset_id
 AND f.status =4');

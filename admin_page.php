@@ -28,7 +28,6 @@ if (checkLogined() == true && $_SESSION['object']->getUserLevel() == 3) {
                 <li><a href="forms/lendingPage.php">Lending page</a></li>
                 <li><a href="forms/returnPage.php">Return page</a></li>
                 <li><a href="forms/barcode_generator.php">Barcode generator</a></li>
-                <li><a href="overdue.php">Overdue asset list</a></li>
                 <li><a href="current_asset_in_lent.php">Current lending asset</a></li>
             </ul>
 

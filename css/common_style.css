@@ -80,3 +80,30 @@ header{
     display:block;
     overflow:hidden;
 }
+nav ul
+{
+list-style-type:none;
+margin:0;
+padding:0;
+overflow:hidden;
+}
+nav li
+{
+float:left;
+}
+nav a:link,nav a:visited
+{
+display:block;
+width:120px;
+font-weight:bold;
+color:#FFFFFF;
+background-color:#8AD9FF;
+text-align:center;
+padding:4px;
+text-decoration:none;
+text-transform:uppercase;
+}
+nav a:hover,nav a:active
+{
+background-color:#7A991A;
+}

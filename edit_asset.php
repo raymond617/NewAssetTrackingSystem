@@ -78,6 +78,11 @@ if (checkLogined() == true) {
                     #action{
                         margin-top:0.7em;
                     }
+                    nav{
+                        display: block;
+                        overflow:hidden;
+                        margin: 1em;
+                    }
                 </style>
             </head>
             <body>
@@ -86,6 +91,12 @@ if (checkLogined() == true) {
                     <h2 id="page_name">Asset Management</h2>
                     <?php include dirname(__FILE__) . "/common_content/login_panel.php"; // div of login panel?>
                 </header>
+                <nav>
+                    <ul>
+                        <li><a href="edit_asset.php">Asset management</a></li>
+                        <li><a href="current_asset_in_lent.php">Current lending asset management</a></li>
+                    </ul>
+                </nav>
                 <?php
                 $assetInfoArray = $adminObject->listAsset();
                 ?>

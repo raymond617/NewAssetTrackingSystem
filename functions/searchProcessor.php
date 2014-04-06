@@ -13,7 +13,7 @@ try {
         try{
             if(strcmp($search_type,"form_id")==0){
                 switch(checkFormStatus($input)){
-                    case 1:case 2:
+                    case 1:case 2:case 6:
                         echo "Still wait for approval";
                         header('Refresh: 3;url=../forms/lendingPage.php');
                         break;
@@ -21,11 +21,11 @@ try {
                         echo "Lent out already";
                         header('Refresh: 3;url=../forms/lendingPage.php');
                         break;
-                    case 5:case 7:
+                    case 5:
                         echo "Form finished";
                         header('Refresh: 3;url=../forms/lendingPage.php');
                         break;
-                    case 3:case 6:
+                    case 3:case 7:
                         if(checkFormExpire($input)){
                             echo "Form expired";
                             header('Refresh: 3;url=../forms/lendingPage.php');

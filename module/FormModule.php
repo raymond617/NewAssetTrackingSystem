@@ -156,7 +156,13 @@ function listAllUsersFromForm($form_id) {
     $userIDArray = $stmt->fetchAll();
     return $userIDArray;
 }
-
+function listAllUsersIDAndEmailFromForm($form_id) {
+    global $pdo;
+    $stmt = $pdo->prepare('select u.id,l.email from users_r_form u,lts_users l where form_id =79 and u.id = l.id');
+    $stmt->execute(array($form_id));
+    $userIDAndEmailArray = $stmt->fetchAll();
+    return $userIDAndEmailArray;
+}
 function listAllAssetsFromFormWithoutBench($form_id) {
     global $pdo;
     $stmt = $pdo->prepare('SELECT f.form_id, f.asset_id, f.start_time, f.end_time, f.status, a.name, a.type
