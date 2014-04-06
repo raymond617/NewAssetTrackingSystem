@@ -1,0 +1,82 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2014年2月1日, 下午04:01:51
+    Author     : Raymond Yuen
+*/
+.row {
+    width: 960px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+header{
+    width:940px;
+    display: block;
+    overflow: hidden;
+}
+#site_logo {
+    float: left;
+    margin: 8px 8px 0 0;
+
+}
+#site_logo a {
+    text-decoration: none;
+    margin: 8px 8px 0 0;
+    color: cornflowerblue;
+}
+#page_name{
+    position:absolute;
+    top:2em;
+    float:left;
+}
+#site_name {
+    float: left;
+    padding-top: 50px;
+}
+#loginOut{
+    margin-top: 0.5em;
+    float:right;
+}
+body{
+    width: 960px;
+    margin: 0.5em auto;
+}
+#loginOut input,#loginOut button{
+    min-width:18em;
+    display:block;
+    overflow:visible;
+    font-size:14px;
+    font-weight:normal;
+    line-height:20px;
+}
+input,button, select,textarea{
+    font-weight:normal;
+    line-height:20px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    vertical-align: middle;
+}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{
+    -webkit-appearance:button;cursor:pointer;}
+label,select,button,input[type="button"],input[type="reset"],input[type="submit"],input[type="radio"],input[type="checkbox"]{
+    cursor:pointer;}
+form{
+    font-family: Helvetica, Arial, sans-serif;
+}
+body{
+    font-size:14px;
+    line-height:20px;
+    color:#333333;
+    width: 960px;
+    margin: 0.5em auto;
+    margin-top: 1.5em;
+}
+select{
+    display:block;
+}
+header{
+    display:block;
+    overflow:hidden;
+}
