@@ -49,6 +49,36 @@ function formSubmit(array $userIDs, array $assets_id, $project_title, $professor
         return FALSE;
     }
 }
+function formSubmitNoAsset(array $userIDs, $project_title, $professor_id, $course_code, $bench, $status, $start_time, $end_time) {
+    global $pdo;
+    //$newFormID=getNewFormID();
+    $count = 0;
+    $stmt = $pdo->prepare('insert into appl_form (status,course_code,project_title,admin_id,prof_id) values (?,?,?,?,?)');
+    $stmt2 = $pdo->prepare('insert into form_r_asset (form_id,asset_id,start_time,end_time,status) values (?,?,?,?,?)');
+    $stmt3 = $pdo->prepare('insert into users_r_form (id,form_id) values (?,?)');
+    try {
+        if ($stmt->execute(array('1', $course_code, $project_title, 10002000, $professor_id)) == true) {
+            $count++;
+        }
+        $newID = $pdo->lastInsertId();
+        foreach ($userIDs as $value) {
+            $stmt3->execute(array($value, $newID));
+            $count++;
+        }
+        
+        if ($stmt2->execute(array($newID, $bench, $start_time, $end_time, '1')) == true) {
+            $count++;
+        }
+        if ($count == 2 + count($userIDs)){
+            return true;
+        }else {
+            return false;
+        }
+    } catch (PDOException $e) {
+        //echo $e;
+        return FALSE;
+    }
+}
 function equipimentFormSubmit($userID, array $assets_id, $status, $start_time, $end_time) {
     global $pdo;
     //$newFormID=getNewFormID();
@@ -276,7 +306,8 @@ function lendingAssetAndBench($form_id,$assetid_list,$start_time,$end_time,$benc
     $stmt3 = $pdo->prepare('update appl_form set status = ? where form_id = ?');
     $stmtTime = $pdo->query('SELECT NOW();');
     $stmtTime->execute();
-    $timestamp = $stmtTime->fetch()[0];
+    $temp = $stmtTime->fetch();
+    $timestamp = $temp[0];
     //$timestamp = date('Y-m-d G:i:s');
     if($stmt->execute(array($form_id))){
         $count++;
@@ -306,7 +337,8 @@ function lendingEquipiment($form_id,$assetid_list,$start_time,$end_time){
     $stmt3 = $pdo->prepare('update appl_form set status = ? where form_id = ?');
     $stmtTime = $pdo->query('SELECT NOW();');
     $stmtTime->execute();
-    $timestamp = $stmtTime->fetch()[0];
+    $temp = $stmtTime->fetch();
+    $timestamp = $temp[0];
     //$timestamp = date('Y-m-d G:i:s');
     if($stmt->execute(array($form_id))){
         $count++;
@@ -329,7 +361,8 @@ function checkFormExpire($form_id){
     global $pdo;
     $stmtTime = $pdo->query('SELECT NOW();');
     $stmtTime->execute();
-    $timestamp = $stmtTime->fetch()[0];
+    $temp = $stmtTime->fetch();
+    $timestamp = $temp[0];
     //$timestamp = date('Y-m-d G:i:s');
     $stmt=$pdo->prepare('select end_time from form_r_asset where form_id = ?');
     $stmt->execute(array($form_id));
@@ -389,7 +422,8 @@ function returnAsset($asset_id){
     global $pdo;
     $stmtTime = $pdo->query('SELECT NOW();');
     $stmtTime->execute();
-    $timestamp = $stmtTime->fetch()[0];
+    $temp = $stmtTime->fetch();
+    $timestamp = $temp[0];
     //$timestamp = date('Y-m-d G:i:s');
     $stmt = $pdo->prepare('update form_r_asset set status = ?, real_end = ? where asset_id = ? and status = ?');
     $stmt2 = $pdo->prepare('select form_id from form_r_asset where asset_id = ? and status = 4');
@@ -416,6 +450,7 @@ AND f.asset_id = a.asset_id
 AND f.form_id = ?
 AND f.status =4');
     $stmt->execute(array($form_id));
-    $count = $stmt->fetch()[0];
+    $temp = $stmt->fetch();
+    $count = $temp[0];
     return $count;
 }

@@ -4,7 +4,6 @@ require_once ('functions/system_function.php');
 session_start();
 //include_once("functions/user_info_functions.php");
 
-
 if (checkLogined() == true) {
     $object = $_SESSION['object'];
     ?>
@@ -35,19 +34,19 @@ if (checkLogined() == true) {
                 <?php
                 if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['contact_no'])) {
                     if ($object->updateInformation($_POST['username'], $_POST['email'], $_POST['contact_no']) == true) {
+                        header('Refresh: 3;url=user_info.php');
                         echo "update info success";
-                        header('Refresh: 3;url=user_info.php');
                     } else {
-                        echo "fail to update info";
                         header('Refresh: 3;url=user_info.php');
+                        echo "fail to update info";
                     }
                 } else if (isset($_POST['oldPassword']) && strlen($_POST['oldPassword']) != 0 && isset($_POST['newPassword']) && strlen($_POST['newPassword']) != 0) {
                     if ($object->changePassword($_POST['oldPassword'], $_POST['newPassword'], $_POST['confirmPassword']) == true) {
+                        header('Refresh: 3;url=user_info.php');
                         echo "change password success\n redirect in 3 seconds";
-                        header('Refresh: 3;url=user_info.php');
                     } else {
-                        echo "fail to change, the old password is wrong or confirm password doesn't match the new password\n redirect in 3 seconds";
                         header('Refresh: 3;url=user_info.php');
+                        echo "fail to change, the old password is wrong or confirm password doesn't match the new password\n redirect in 3 seconds";
                     }
                 } else {
                     ?>

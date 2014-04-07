@@ -1,11 +1,11 @@
-<!DOCTYPE html>
 <?php
 require_once 'class/Objects.php';
 require_once ('functions/system_function.php');
 session_start();
 if (checkLogined() == true && $_SESSION['object']->getUserLevel() == 3) {
     $object = $_SESSION['object'];
-    ?>
+?>
+<!DOCTYPE html>
     <html>
         <head>
             <meta charset="UTF-8">
@@ -33,9 +33,10 @@ if (checkLogined() == true && $_SESSION['object']->getUserLevel() == 3) {
 
         </body>
     </html>
-    <?php
+<?php
 } else {
-    echo "must login as admin";
     header('Refresh: 3;url=index.php');
+    echo "must login as admin";
+    
 }
 ?>

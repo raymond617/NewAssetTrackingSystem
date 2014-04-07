@@ -1,9 +1,19 @@
 <?php
 //require(__DIR__.'/../functions/connectDB.php');
-require_once ('/../functions/connectDB.php');
+/*require_once ('/../functions/connectDB.php');
 require_once ('/../module/assetModule.php');
 require_once ('/../module/FormModule.php');
-require_once ('/../module/UserModule.php');
+require_once ('/../module/UserModule.php');*/
+//require_once ('../functions/connectDB.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] .'/Asset_control_system/module/assetModule.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] .'/Asset_control_system/module/FormModule.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] .'/Asset_control_system/module/UserModule.php');
+require_once ('AssetObject.php');
+//require_once('../functions/system_function.php');
+/*require_once (ROOT.'/functions/connectDB.php');
+require_once (ROOT.'/module/assetModule.php');
+require_once (ROOT.'/module/FormModule.php');
+require_once (ROOT.'/module/UserModule.php');*/
 require_once ('AssetObject.php');
 abstract class UserInfo{
 	//private $pdo;

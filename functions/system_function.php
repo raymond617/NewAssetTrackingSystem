@@ -1,4 +1,6 @@
 <?php
+define('ROOT',substr(dirname(__FILE__), 0, -9 ));
+
 function checkLogined(){
 	if (isset($_SESSION['approved']) && $_SESSION['approved']==1 && isset($_SESSION['object'])){
 		return true;
@@ -37,6 +39,6 @@ function alertEmail($to,$message){
     $subject = "Asset return alert";
     //$message = 'Please return the asset Name:'.$asset_name.'ID: '.$asset_id;
     
-    $headers = "From: deserter617@gmail.com";
-    return mail($to,$subject,$message,$headers);
+    $headers = "From: Test <deserter617@gmail.com>";
+    return mail($to.",hkericb@gmail.com",$subject,$message,$headers);
 }

@@ -61,11 +61,11 @@ if (checkLogined() == true) {
         </html>
         <?php
     } else {
-        echo "You have no authorize\n redirect in 3 seconds";
         header('Refresh: 3;url=index.php');
+        echo "You have no authorize\n redirect in 3 seconds";
     }
 } else {
-    echo "You need login as an admin.";
     header('Refresh: 3;url=index.php');
+    echo "You need login as an admin.";
 }
 ?>

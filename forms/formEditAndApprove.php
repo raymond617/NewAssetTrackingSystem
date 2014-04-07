@@ -137,7 +137,7 @@ if (checkLogined() == true) {
 
                     <input id="submit" type="submit" value="Submit Form">
                 </form>
-                <?php print_r($formInfo['asset_array']); ?>
+                <?php //print_r($formInfo['asset_array']); ?>
             </body>
             <script type="text/javascript" src="../javascript/jquery-1.8.3.min.js" charset="UTF-8"></script>
         <script type="text/javascript" src="../javascript/bootstrap.min.js"></script>
@@ -271,11 +271,11 @@ if (checkLogined() == true) {
         </html>
         <?php
     } else {
-        echo "You have no authorize\n redirect in 3 seconds";
         header('Refresh: 3;url=index.php');
+        echo "You have no authorize\n redirect in 3 seconds";
     }
 } else {
-    echo "You need login as an admin.";
     header('Refresh: 3;url=index.php');
+    echo "You need login as an admin.";
 }
 ?>	

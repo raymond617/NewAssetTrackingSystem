@@ -206,7 +206,7 @@ if (isset($_SESSION['approved']) && $_SESSION['approved'] == 1) {
     </html>
     <?php
 } else {
-    echo "must login first";
     header('Refresh: 3;url=../index.php');
+    echo "must login first";
 }
 ?>		

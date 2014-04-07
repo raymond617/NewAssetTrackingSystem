@@ -12,8 +12,9 @@ if (checkLogined() == true) {
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
                 <link rel="stylesheet" type="text/css" href="css/common_style.css"/>
                 <script type="text/javascript" src="fancybox/lib/jquery-1.10.1.min.js"></script>
-                <script type="text/javascript" src="fancybox/source/jquery.fancybox.js?v=2.1.5"></script>
+                <script type="text/javascript" src="fancybox/source/jquery.fancybox.js?v=2.1.5"></script>                
                 <link rel="stylesheet" type="text/css" href="fancybox/source/jquery.fancybox.css?v=2.1.5" media="screen" />
+                <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
                 <script type="text/javascript">
                     $(document).ready(function() {
                         $('.fancybox').fancybox({
@@ -33,10 +34,11 @@ if (checkLogined() == true) {
                             }
                         });
                     });
+                    $(document).ready(function() {
+                        $('#asset_table').dataTable();
+                    });
                 </script>
-
                 <style  type="text/css">
-
                     input,label{
                         display:block;
                     }
@@ -49,7 +51,7 @@ if (checkLogined() == true) {
                         width: 100%;
                     }
                     td {
-                        min-width: 1em;
+                        min-width: 7em;
                         height: 3em;
                     }
                     tr {
@@ -73,52 +75,64 @@ if (checkLogined() == true) {
                         margin: 0.5em 1em;
                         float: left;
                     }
+                    #action{
+                        margin-top:0.7em;
+                    }
+                    nav{
+                        display: block;
+                        overflow:hidden;
+                        margin: 1em;
+                    }
                 </style>
             </head>
             <body>
                 <header class="row">
                     <h1 id="site_logo"><a href="index.php">Laboratory asset tracking system</a></h1>
-                    <h2 id="page_name">Equipiment form management</h2>
+                    <h2 id="page_name">User Management</h2>
                     <?php include dirname(__FILE__) . "/common_content/login_panel.php"; // div of login panel?>
                 </header>
                 <?php
-                $formInfoArray = $adminObject->listEquipimentForms();
+                $userInfoArray = $adminObject->listUser();
                 ?>
                 <article>
-                    <form action="functions/FormProcessor.php" method="post" class="" onSubmit="return confirm('Selected forms will be deleted. Are you sure?')">
-                        <label for="Delete Form">Action: </label>
-                        <a id="add_form" class="fancybox" data-fancybox-type="iframe" href="forms/equipiment_borrowing.php" style="display:hidden;"></a>
-                        <input type="button" class="actionBtn" value="Add Form" id="add_form" onClick="callFancyBox(this.value);">
+                    <form action="functions/userProcessor.php" method="post" class="" onSubmit="return confirm('Selected asset will be deleted. Are you sure?')">
+                        <label for="delete_user" id="action">Action: </label>
+                        <input type="submit" class="actionBtn" name="delete_user" value="Delete" id="delete_user">
+                        <a id="add_user" class="fancybox" data-fancybox-type="iframe" href="forms/registerForm.php" style="display:hidden;"></a>
+                        <input type="button" class="actionBtn" value="Add User" id="add_user" onClick="callFancyBox(this.value);">
                         <br>
                         <br>
-                        <table>
-                            <tr>
-                                <th>Apply Time</th>
-                                <th>Form ID</th>
-                                <th>Student IDs</th>
-                                <th>Start time</th>
-                                <th>End time</th>
-                                <th>Status</th>
-                            </tr>
-                            <?php
-                            foreach ($formInfoArray as $row) {
-                                ?>
-                            
-                                <tr>    
-                                    <td><?php echo $row['apply_timestamp'] ?></td>
-                                    <td><?php echo $row['form_id'] ?></td>
-                                    
-                                    <td><?php foreach($row['user_array'] as $value) echo $value['id'].'<br>' ?></td>
-                                    
-                                    <td><?php echo $row['asset_array'][0]['start_time'] ?></td>
-                                    <td><?php echo $row['asset_array'][0]['end_time'] ?></td>
-                                    <td><?php echo statusTranslation($row['status']); ?></td>
-                                    <td>
-                                        <a class="fancybox" data-fancybox-type="iframe" href="forms/approveEquipimentForm.php?form_id=<?php echo $row['form_id'] ?>"><?php if($row['status']==6){ echo "Detail or Edit";} else echo "Detail";?></a>
-                                        <a class="fancybox" data-fancybox-type="iframe" href="functions/FormProcessor.php?delete_form=true&form_id=<?php echo $row['form_id'] ?>">Delete</a>
-                                    </td>
+                        <table id="asset_table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="admin_mem_checkBox" name="all" onClick="check_all(this, 'row_selected[]')"></th>
+                                    <th>User ID</th>
+                                    <th>User name</th>
+                                    <th>Email</th>
+                                    <th>Contact NO.</th>
+                                    <th>User Type</th>
+                                    <th>User level</th>
                                 </tr>
-                            <?php } ?>
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($userInfoArray as $row) {
+                                    ?>
+                                    <tr>
+                                        <td class="narrowCol"><input type="checkbox" class="admin_mem_checkBox" name="row_selected[]" value="<?php echo $row['id'] ?>"></td>
+                                        <td><?php echo $row['id'] ?></td>
+                                        <td><?php echo $row['username'] ?></td>
+                                        <td><?php echo $row['email'] ?></td>
+                                        <td><?php echo $row['contact_no'] ?></td>
+                                        <td><?php echo $row['user_type'] ?></td>
+                                        <td><?php echo $row['user_level'] ?></td>
+
+                                        <td><a id="edit_asset" class="fancybox" data-fancybox-type="iframe" href="forms/editAssetform.php?asset_id=<?php echo $row['id'] ?>">Edit</a>
+                                            <a class="fancybox" data-fancybox-type="iframe" href="functions/userProcessor.php?delete_user=true&user_id=<?php echo $row['id'] ?>">Delete</a>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
                         </table>
                     </form>
                     <!--///////////////////////-->
@@ -134,12 +148,16 @@ if (checkLogined() == true) {
                     }
                 }
 
+                function deleteMember() {
+
+                }
+
                 function callFancyBox(val)
                 {
-                    $('#add_form').trigger('click');
+                    $('#add_asset').trigger('click');
                 }
-            </script>
 
+            </script>            
         </html>
         <?php
     } else {
@@ -148,6 +166,6 @@ if (checkLogined() == true) {
     }
 } else {
     header('Refresh: 3;url=index.php');
-    echo "You need login as a professor.";
+    echo "You need login as an admin.";
 }
 ?>		

@@ -50,7 +50,7 @@ if (checkLogined() == true) {
                     <input id="course_code" name="course_code" type="text" value="<?php echo $formInfo['course_code'] ?>">
                     <label for="professor">Professor:</label>
                     <input id="professor_id" name="professor_id" type="hidden" value="<?php echo $formInfo['prof_id']; ?>" >
-                    <input id="professor" name="professor" type="text" value="<?php echo $_SESSION['object']->getProfessorName($formInfo['prof_id'])[0][0]; ?>" disabled="disabled">
+                    <input id="professor" name="professor" type="text" value="<?php $temp = $_SESSION['object']->getProfessorName($formInfo['prof_id']); echo $temp[0][0]; ?>" disabled="disabled">
                     <label for="bench">Bench:</label>
                     <input id="bench" type="text" value="<?php echo $formInfo['bench'][0]['name']; ?>" readonly>
                     <input id="bench" name="bench" type="hidden" value="<?php echo $formInfo['bench'][0]['asset_id']; ?>">
@@ -145,7 +145,7 @@ if (checkLogined() == true) {
                     <?php }else{ ?>
                     <input id="submit" type="submit" value="Submit Form">
                     <?php } ?>     
-                    <?php print_r($formInfo['asset_array']); ?>
+                    <?php //print_r($formInfo['asset_array']); ?>
                 </form>
             </body>
             <script type="text/javascript" src="../javascript/jquery-1.8.3.min.js" charset="UTF-8"></script>
@@ -282,11 +282,11 @@ if (checkLogined() == true) {
         </html>
         <?php
     } else {
-        echo "You have no authorize\n redirect in 3 seconds";
         header('Refresh: 3;url=index.php');
+        echo "You have no authorize\n redirect in 3 seconds";
     }
 } else {
-    echo "You need login as an admin.";
     header('Refresh: 3;url=index.php');
+    echo "You need login as an admin.";
 }
 ?>

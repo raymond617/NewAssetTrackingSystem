@@ -15,7 +15,10 @@ if (checkLogined() == true) {
                 <link rel="stylesheet" type="text/css" href="../css/form_style.css"/>
                 <style  type="text/css">
                     textarea{
-                        width:500px;
+                        width:auto;
+                    }
+                    textarea{
+                        text-indent:0;
                     }
                 </style>
             </head>
@@ -29,8 +32,7 @@ if (checkLogined() == true) {
                     <?php $sopList = $_SESSION['sop']; ?>
                     <form action="../functions/FormProcessor.php" method="post" id="sop">
                         <?php foreach ($sopList as $row) { ?>
-                            <textarea rows="8" cols="50">
-                                <?php echo "Asset name: " . $row['name'] . "\nDocument: ", $row['sop']; ?>
+                            <textarea rows="8" cols="50"><?php echo "Asset name: " . $row['name'] . "\nDocument: ", $row['sop']; ?>
                             </textarea>
                         <?php } ?>
                         <input type="hidden" name="sop" value="true">
@@ -51,10 +53,10 @@ if (checkLogined() == true) {
         </html>
         <?php
     } else {
-        echo "You have no authorize\n redirect in 3 seconds";
         header('Refresh: 3;url=../index.php');
+        echo "You have no authorize\n redirect in 3 seconds";
     }
 } else {
-    echo "You need to login.";
     header('Refresh: 3;url=../index.php');
+    echo "You need to login.";
 }

@@ -1,20 +1,20 @@
 <?php
-$arrayForPDO = array(
+/*$arrayForPDO = array(
 	 'db' => array(
 		    'host'     => '127.0.0.1',
 			'dbname'   => 'lts',
 			'username' => 'root',
 			'password' => '',
 			)
-      );
-/*$arrayForPDO = array(
-	 'db' => array(
-		    'host'     => 'mysql5.000webhost.com',
-			'dbname'   => 'a2601444_acs',
-			'username' => 'a2601444_acs',
-			'password' => '1234qwer',
-			)
       );*/
+$arrayForPDO = array(
+	 'db' => array(
+		    'host'     => '68.85.84.105',
+			'dbname'   => 'ericb_ouhk',
+			'username' => 'ericb_raymond',
+			'password' => '1q2w3e',
+			)
+      );
 
 function connectDB(){
 	global $arrayForPDO;

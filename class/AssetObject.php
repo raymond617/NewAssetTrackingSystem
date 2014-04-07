@@ -1,6 +1,7 @@
 <?php
 //require_once (__DIR__.'/../module/assetModule.php');
-require_once ('/../module/assetModule.php');
+//
+require_once ($_SERVER['DOCUMENT_ROOT'] .'/Asset_control_system/module/assetModule.php');
 class AssetObject{
 	private $id;
 	private $name;

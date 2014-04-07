@@ -14,28 +14,28 @@ try {
             if(strcmp($search_type,"form_id")==0){
                 switch(checkFormStatus($input)){
                     case 1:case 2:case 6:
-                        echo "Still wait for approval";
                         header('Refresh: 3;url=../forms/lendingPage.php');
+                        echo "Still wait for approval";
                         break;
                     case 4:
-                        echo "Lent out already";
                         header('Refresh: 3;url=../forms/lendingPage.php');
+                        echo "Lent out already";
                         break;
                     case 5:
-                        echo "Form finished";
                         header('Refresh: 3;url=../forms/lendingPage.php');
+                        echo "Form finished";
                         break;
                     case 3:case 7:
                         if(checkFormExpire($input)){
-                            echo "Form expired";
                             header('Refresh: 3;url=../forms/lendingPage.php');
+                            echo "Form expired";
                         }else{
                             header('Location:../forms/lendingPage.php?form_id='.$input);
                         }
                         break;
                     default:
-                        echo "not existed";
                         header('Refresh: 3;url=../forms/lendingPage.php');
+                        echo "not existed";
                 }
                 /*if(!checkFormApproval($input)){
                     echo "Not exist or Still wait for approval";

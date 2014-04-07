@@ -22,21 +22,22 @@
  </style>
 </head>
 <body>
-    <h2>Add asset</h2>
-<form action="../functions/assetsProcessor.php" method="post" id="add_asset">
-	<label for="labID">Laboratory ID:</label>
-	<input id="labID" name="labID" type="text" value="">
-	<label for="name">Asset name:</label>
+    <h2>Add User</h2>
+<form action="../functions/userProcessor.php" method="post" id="add_user">
+	<label for="userID">User ID:</label>
+	<input id="userID" name="user_id" type="text" value="">
+	<label for="name">User name:</label>
 	<input id="name" name="name" type="text" value="" >
-	<label for="assetID">Asset ID:</label>
-	<input id="assetID" name="assetID" type="text" value="" >
-	<label for="type">Asset type:</label>
-	<input id="type" name="type" type="text" value="">
-	<label for="days_b4_alert">Date before alert:</label>
-	<input id="days_b4_alert" name="days_b4_alert" type="text" value="">
-	<input id="action" name="add_asset" type="hidden" value="true">
-	
-	<input id="submit" type="submit" value="Add assets">
+	<label for="email">Email:</label>
+	<input id="email" name="email" type="text" value="" >
+	<label for="contact_no">Contact no:</label>
+	<input id="contact_no" name="contact_no" type="text" value="">
+	<label for="user_level">User level:</label>
+        <input id="user_level" name="user_level" type="text" value="" placeholder="1 or 2 or 3">
+        <label for="user_type">User Type:</label>
+        <input id="user_type" name="user_type" type="text" value="" placeholder="Student or Teacher or Admin">
+	<input id="action" name="add_user" type="hidden" value="true">
+	<input id="submit" type="submit" value="Add user">
 </form>
 <div>
 

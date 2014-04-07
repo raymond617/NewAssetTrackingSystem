@@ -122,7 +122,7 @@ if (checkLogined() == true) {
                     <?php }else{ ?>
                     <input id="submit" type="submit" value="Submit Form" disabled="disabled">
                     <?php } ?>
-                    <?php print_r($formInfo['asset_array']); ?>
+                    <?php //print_r($formInfo['asset_array']); ?>
                 </form>
             </body>
             <script type="text/javascript" src="../javascript/jquery-1.8.3.min.js" charset="UTF-8"></script>
@@ -238,11 +238,11 @@ if (checkLogined() == true) {
         </html>
         <?php
     } else {
-        echo "You have no authorize\n redirect in 3 seconds";
         header('Refresh: 3;url=index.php');
+        echo "You have no authorize\n redirect in 3 seconds";
     }
 } else {
-    echo "You need login as an admin.";
     header('Refresh: 3;url=index.php');
+    echo "You need login as an admin.";
 }
 ?>
