@@ -128,7 +128,7 @@ function getAssetWithSOP(array $asset_id){
 }
 function getAssetReserveTime($id){
     global $pdo;
-    $stmt = $pdo->prepare('SELECT start_time, end_time, status
+    $stmt = $pdo->prepare('SELECT form_id,start_time, end_time, status
 FROM `form_r_asset`
 WHERE asset_id =?');
     $stmt->execute(array($id));

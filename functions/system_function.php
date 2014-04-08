@@ -40,5 +40,5 @@ function alertEmail($to,$message){
     //$message = 'Please return the asset Name:'.$asset_name.'ID: '.$asset_id;
     
     $headers = "From: Test <deserter617@gmail.com>";
-    return mail($to.",hkericb@gmail.com",$subject,$message,$headers);
+    return mail($to,$subject,$message,$headers);
 }

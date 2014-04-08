@@ -15,12 +15,13 @@ if (checkLogined() == true && $_SESSION['object']->getUserLevel() == 3) {
         </head>
         <body>
             <header class="row">
-                <h1 id="site_logo"><a href="">Laboratory asset tracking system</a></h1>
+                <h1 id="site_logo"><a href="index.php">Laboratory asset tracking system</a></h1>
                 <h2 id="page_name">Admin page</h2>
                 <?php include dirname(__FILE__) . "/common_content/login_panel.php"; // div of login panel?>
             </header>
             <ul>
                 <li><a href="edit_asset.php">Asset management</a></li>
+                <li><a href="user_management.php">User management</a></li>
                 <li><a href="forms/experiment_reservation_form.php">Reserve an experiment</a></li>
                 <li><a href="form_management.php">Form management</a></li>
                 <li><a href="equipiment_form_management.php">Equipiment borrowing management</a></li>

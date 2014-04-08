@@ -9,7 +9,7 @@
       );*/
 $arrayForPDO = array(
 	 'db' => array(
-		    'host'     => '68.85.84.105',
+		    'host'     => '69.85.84.105',
 			'dbname'   => 'ericb_ouhk',
 			'username' => 'ericb_raymond',
 			'password' => '1q2w3e',

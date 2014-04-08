@@ -315,11 +315,11 @@ try {
     } else if (isset($_POST['return'])) {
         $asset_id = $_POST['asset_id'];
         if (returnAsset($asset_id) == true) {
+            header('Refresh: 3;url=../forms/returnPage.php');
             echo 'Asset id:' . $asset_id . ' return success !';
-            header('Refresh: 3;url=../forms/returnPage.php');
         } else {
-            echo 'Asset id:' . $asset_id . ' return fail , it has not lent out!';
             header('Refresh: 3;url=../forms/returnPage.php');
+            echo 'Asset id:' . $asset_id . ' return fail , it has not lent out!';
         }
     } else if (isset($_POST['barcode'])) {
         $barcode_id = $_POST['id'];

@@ -92,7 +92,7 @@ if (checkLogined() == true) {
                     <?php include dirname(__FILE__) . "/common_content/login_panel.php"; // div of login panel?>
                 </header>
                 <?php
-                $userInfoArray = $adminObject->listUser();
+                $userInfoArray = $adminObject->listUsers();
                 ?>
                 <article>
                     <form action="functions/userProcessor.php" method="post" class="" onSubmit="return confirm('Selected asset will be deleted. Are you sure?')">
@@ -127,7 +127,7 @@ if (checkLogined() == true) {
                                         <td><?php echo $row['user_type'] ?></td>
                                         <td><?php echo $row['user_level'] ?></td>
 
-                                        <td><a id="edit_asset" class="fancybox" data-fancybox-type="iframe" href="forms/editAssetform.php?asset_id=<?php echo $row['id'] ?>">Edit</a>
+                                        <td><!--<a id="edit_asset" class="fancybox" data-fancybox-type="iframe" href="forms/editUserform.php?user_id=<?php //echo $row['id'] ?>">Edit</a>-->
                                             <a class="fancybox" data-fancybox-type="iframe" href="functions/userProcessor.php?delete_user=true&user_id=<?php echo $row['id'] ?>">Delete</a>
                                         </td>
                                     </tr>
@@ -154,7 +154,7 @@ if (checkLogined() == true) {
 
                 function callFancyBox(val)
                 {
-                    $('#add_asset').trigger('click');
+                    $('#add_user').trigger('click');
                 }
 
             </script>            

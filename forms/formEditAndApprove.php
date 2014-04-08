@@ -44,7 +44,7 @@ if (checkLogined() == true) {
                     <input id="course_code" name="course_code" type="text" value="<?php echo $formInfo['course_code'] ?>">
                     <label for="professor">Professor:</label>
                     <input id="professor_id" name="professor_id" type="hidden" value="<?php echo $formInfo['prof_id']; ?>" >
-                    <input id="professor" name="professor" type="text" value="<?php echo $_SESSION['object']->getProfessorName($formInfo['prof_id'])[0][0]; ?>" disabled="disabled">
+                    <input id="professor" name="professor" type="text" value="<?php $temp = $_SESSION['object']->getProfessorName($formInfo['prof_id']); echo $temp[0][0]; ?>" disabled="disabled">
                     <label for="bench">Bench:</label>
                     <input id="bench" type="text" value="<?php echo $formInfo['bench'][0]['name']; ?>" readonly>
                     <input id="bench" name="bench" type="hidden" value="<?php echo $formInfo['bench'][0]['asset_id']; ?>">

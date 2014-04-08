@@ -1,6 +1,6 @@
 <?php
 require_once ('../functions/system_function.php');
-require_once ('../module/userModule.php');
+require_once ('../module/UserModule.php');
 session_start();
 /* 
  * To change this license header, choose License Headers in Project Properties.

@@ -21,3 +21,39 @@ AND uf.id = lu.id');
     $userIDArray = $stmt->fetchAll();
     return $userIDArray;
 }
+function listAllUserM(){
+    global $pdo;
+    $stmt = $pdo->prepare('select * from lts_users');
+    $stmt->execute();
+    $userArray = $stmt->fetchAll();
+    return $userArray;
+}
+function addUser($user_id,$name,$email,$contact_no,$user_level,$user_type){
+    global $pdo;
+    $stmt = $pdo->prepare('insert into lts_users (id,username,email,contact_no,user_level,user_type,password) values (?,?,?,?,?,?,?)');
+    try {
+        if ($stmt->execute(array($user_id, $name, $email, $contact_no, $user_level, $user_type,"1234567")) == true) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (PDOException $e) {
+        //echo $e;
+        return FALSE;
+    }
+}
+
+function deleteUser($user_id) {
+    global $pdo;
+    $stmt = $pdo->prepare('delete from lts_users where id =?');
+    try {
+        if ($stmt->execute(array($user_id)) == true) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (PDOException $e) {
+        //echo $e;
+        return FALSE;
+    }
+}

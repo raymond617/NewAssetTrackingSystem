@@ -14,7 +14,7 @@ require_once ('AssetObject.php');
 require_once (ROOT.'/module/assetModule.php');
 require_once (ROOT.'/module/FormModule.php');
 require_once (ROOT.'/module/UserModule.php');*/
-require_once ('AssetObject.php');
+//require_once ('AssetObject.php');
 abstract class UserInfo{
 	//private $pdo;
 	private $email;
@@ -179,6 +179,9 @@ class AdminObject extends UserInfo{
         }
         public function listCurrentAssetInlend(){
             return getCurrentAssetInTime();
+        }
+        public function listUsers(){
+            return listAllUserM();
         }
 }
 class TeacherObject extends UserInfo{
