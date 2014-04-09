@@ -10,7 +10,7 @@ try {
             'type' => $_POST['type'],
             'daysB4Alert' => $_POST['days_b4_alert'],
             'sop' => $_POST['sop'],
-                'status'=>'U');
+                'status'=>'A');
         try{
             if($_SESSION['object']::addAsset($assetGetArray)){
                 echo 'add asset success!';

@@ -72,7 +72,7 @@ function deleteAsset($asset_id) {
 
 function getBenchList() {
     global $pdo;
-    $stmt = $pdo->prepare('SELECT asset_id,name FROM assets where type = ?');
+    $stmt = $pdo->prepare('SELECT asset_id,name FROM assets where type = ? and status ="A"');//$stmt = $pdo->prepare('SELECT asset_id,name FROM assets where type = ?') ;
     $stmt->execute(array("bench"));
     $benches = $stmt->fetchAll();
     if (count($benches) > 0)
@@ -89,7 +89,7 @@ function getAssetTypesM(){
 }
 function getAssetByTypes($types){
     global $pdo;
-    $stmt = $pdo->prepare('SELECT * FROM assets where type = ?');
+    $stmt = $pdo->prepare('SELECT * FROM assets where type = ? and status ="A"'); //$stmt = $pdo->prepare('SELECT * FROM assets where type = ?');
     $stmt->execute(array($types));
     $assets = $stmt->fetchAll();
     return $assets;

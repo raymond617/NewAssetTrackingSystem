@@ -12,7 +12,6 @@ if (checkLogined() == true) {
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
                 <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
-                <link href="../css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
                 <link rel="stylesheet" type="text/css" href="../css/form_style.css"/>
                 <style  type="text/css">
                     select,label{
@@ -44,18 +43,6 @@ if (checkLogined() == true) {
                 </article>
            </body>
            <script type="text/javascript" src="../javascript/jquery-1.8.3.min.js" charset="UTF-8"></script>
-           <script type="text/javascript">
-               $(window).load(function() {
-                                $(function() {
-                                    var scntDiv = $('#asset_list');
-                                    var i = $('#asset_list p').size() + 1;
-
-                                    $('#addAsset').live('click', function() {
-                                        $('<p><input id="asset_id" name="asset_id" type="text" value="" placeholder="Asset ID"></p>').appendTo(scntDiv);
-                                        i++;
-                                        return false;
-                                    });
-           </script>
         </html>
 <?php
     } else {
