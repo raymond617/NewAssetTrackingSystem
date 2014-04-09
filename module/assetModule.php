@@ -4,11 +4,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/Asset_control_system/functions/connec
 require_once('UserModule.php');
 $pdo = connectDB();
 
-function addAssets($asset_id, $type, $status, $name, $days_b4_alert, $lab_id) {
+function addAssets($asset_id, $type, $status, $name, $days_b4_alert, $lab_id, $sop) {
     global $pdo;
-    $stmt = $pdo->prepare('insert into assets (asset_id,type,status,name,days_b4_alert,lab_id) values (?,?,?,?,?,?)');
+    $stmt = $pdo->prepare('insert into assets (asset_id,type,status,name,days_b4_alert,lab_id, sop) values (?,?,?,?,?,?,?)');
     try {
-        if ($stmt->execute(array($asset_id, $type, $status, $name, $days_b4_alert, $lab_id)) == true) {
+        if ($stmt->execute(array($asset_id, $type, $status, $name, $days_b4_alert, $lab_id, $sop)) == true) {
             return true;
         } else {
             return false;
@@ -40,11 +40,11 @@ function getAssetNameByID($id) {
         return null;
 }
 
-function updateAsset($asset_id, $type, $status, $name, $days_b4_alert, $lab_id) {
+function updateAsset($asset_id, $type, $status, $name, $days_b4_alert, $lab_id, $sop) {
     global $pdo;
-    $stmt = $pdo->prepare('update assets set type=? , status=?, name=?, days_b4_alert=? ,lab_id=? where asset_id = ?');
+    $stmt = $pdo->prepare('update assets set type=? , status=?, name=?, days_b4_alert=? ,lab_id=? , sop=? where asset_id = ?');
     try {
-        if ($stmt->execute(array($type, $status, $name, $days_b4_alert, $lab_id, $asset_id)) == true) {
+        if ($stmt->execute(array($type, $status, $name, $days_b4_alert, $lab_id, $asset_id, $sop)) == true) {
             return true;
         } else {
             return false;

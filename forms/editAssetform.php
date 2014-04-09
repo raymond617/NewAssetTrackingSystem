@@ -37,6 +37,8 @@ if (checkLogined() == true) {
                     <input id="type" name="type" type="text" value="<?php echo $assetObject->getTheType(); ?>">
                     <label for="days_b4_alert">Date before alert:</label>
                     <input id="days_b4_alert" name="days_b4_alert" type="text" value="<?php echo $assetObject->getDayB4alert(); ?>">
+                    <label for="sop">SOP Link:</label>
+                    <input id="sop" name="sop" type="text" value="<?php echo $assetObject->getSOP(); ?>">
                     <label for="status">Status:</label>
                     <input id="status" name="status" type="text" value="<?php echo $assetObject->getStatus(); ?>">
                     <input id="action" name="edit_asset" type="hidden" value="true">

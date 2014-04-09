@@ -9,6 +9,7 @@ try {
             'assetID' => $_POST['assetID'],
             'type' => $_POST['type'],
             'daysB4Alert' => $_POST['days_b4_alert'],
+            'sop' => $_POST['sop'],
                 'status'=>'U');
         try{
             if($_SESSION['object']::addAsset($assetGetArray)){
@@ -39,6 +40,7 @@ try {
             'assetID' => $_POST['assetID'],
             'type' => $_POST['type'],
             'daysB4Alert' => $_POST['days_b4_alert'],
+            'sop' => $_POST['sop'],
                 'status'=>$_POST['status']);
         try{
             if($_SESSION['object']::updateAsset($assetInfoArray)){

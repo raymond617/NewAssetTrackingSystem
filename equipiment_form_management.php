@@ -103,7 +103,6 @@ if (checkLogined() == true) {
                             <?php
                             foreach ($formInfoArray as $row) {
                                 ?>
-                            
                                 <tr>    
                                     <td><?php echo $row['apply_timestamp'] ?></td>
                                     <td><?php echo $row['form_id'] ?></td>

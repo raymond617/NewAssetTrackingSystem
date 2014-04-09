@@ -106,7 +106,7 @@ if (checkLogined() == true) {
                                     <td><?php echo $row['asset_array'][0]['end_time'] ?></td>
                                     <td><?php echo statusTranslation($row['status']); ?></td>
                                     <td>
-                                        <?php if($row['status']==1) {?>
+                                        <?php if(strcmp($row['status'],'1')==0 ||strcmp($row['status'],'6')==0) {?>
                                         <a class="fancybox" data-fancybox-type="iframe" href="forms/editApplForm.php?form_id=<?php echo $row['form_id'] ?>">Detail &AMP; Edit</a>
                                         <a class="fancybox" data-fancybox-type="iframe" href="functions/FormProcessor.php?delete_form=true&form_id=<?php echo $row['form_id'] ?>">Delete</a>
                                         <?php } ?>

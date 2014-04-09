@@ -151,6 +151,6 @@ if (checkLogined() == true) {
     }
 } else {
     header('Refresh: 3;url=index.php');
-    echo "You need login as a professor.";
+    echo "You need login as an admin.";
 }
 ?>		

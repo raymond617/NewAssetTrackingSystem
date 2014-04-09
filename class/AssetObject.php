@@ -9,6 +9,7 @@ class AssetObject{
 	private $status;
 	private $labID;
 	private $dayB4alert;
+        private $sop;
 	private $arrayOfTimetable;
         /*private $idT;
 	private $nameT;
@@ -35,6 +36,7 @@ class AssetObject{
                     $instance->setStatus($assetInfoArray[0]['status']);
                     $instance->setLabID($assetInfoArray[0]['lab_id']);
                     $instance->setDayB4alert($assetInfoArray[0]['days_b4_alert']);
+                    $instance->setSOP($assetInfoArray[0]['sop']);
                     return $instance;
                 }
                 else return null;
@@ -47,13 +49,14 @@ class AssetObject{
                 $instance->setStatus($row['status']);
                 $instance->setLabID($row['labID']);
                 $instance->setDayB4alert($row['daysB4Alert']);
+                $instance->setSOP($row['sop']);
 		return $instance;
 	}
 	public function addAssetToDB(){
-		return addAssets($this->getID(),$this->getTheType(),$this->getStatus(),$this->getName(),$this->getDayB4alert(),$this->getLabID());
+		return addAssets($this->getID(),$this->getTheType(),$this->getStatus(),$this->getName(),$this->getDayB4alert(),$this->getLabID(),$this->getSOP());
 	}
         public function updateInfo($assetInfoArray){
-            return updateAsset($assetInfoArray['assetID'],$assetInfoArray['type'],$assetInfoArray['status'],$assetInfoArray['name'],$assetInfoArray['daysB4Alert'],$assetInfoArray['labID']);
+            return updateAsset($assetInfoArray['assetID'],$assetInfoArray['type'],$assetInfoArray['status'],$assetInfoArray['name'],$assetInfoArray['daysB4Alert'],$assetInfoArray['labID'],$assetInfoArray['sop']);
         }
         public function getID(){
             return $this->id;
@@ -90,5 +93,11 @@ class AssetObject{
         }
         public function setDayB4alert($db4){
             $this->dayB4alert = $db4;
+        }
+        public function getSOP(){
+            return $this->sop;
+        }
+        public function setSOP($sop){
+            $this->sop = $sop;
         }
 }

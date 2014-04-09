@@ -46,21 +46,21 @@ if (checkLogined() == true) {
                     <input id="professor_id" name="professor_id" type="hidden" value="<?php echo $formInfo['prof_id']; ?>" >
                     <input id="professor" name="professor" type="text" value="<?php $temp = $_SESSION['object']->getProfessorName($formInfo['prof_id']); echo $temp[0][0]; ?>" disabled="disabled">
                     <label for="bench">Bench:</label>
-                    <input id="bench" type="text" value="<?php echo $formInfo['bench'][0]['name']; ?>" readonly>
-                    <input id="bench" name="bench" type="hidden" value="<?php echo $formInfo['bench'][0]['asset_id']; ?>">
-                    <!--<select name="bench" id="bench" onchange="clearTime();">
-                    <?php/*
+                    <input id="bench" type="text" value="<?php echo $formInfo['bench'][0]['name']; //." Asset ID: ".$formInfo['bench'][0]['asset_id']?>" readonly>
+                    <!--<input id="bench" name="bench" type="hidden" value="<?php //echo $formInfo['bench'][0]['asset_id']; ?>">-->
+                    <select name="bench" id="bench" onchange="clearTime();">
+                    <?php
                     $benches = getBenchList();
                     foreach ($benches as $b) {
-                        if(strcmp((string)$b['asset_id'],(string)$formInfo['bench'][0]['asset_id'])==0){
-                        //if(strcmp($b['asset_id'],$formInfo['bench'][0]['asset_id'])==0){
-                            echo "<option value='" . $b['asset_id'] . "' selected='selected'>" . $b['name'] . "</option>";
-                        }else{
-                            echo "<option value='" . $b['asset_id'] . "'>" . $b['name'] . "</option>";
-                        }
-                    }*/
+                        //if(strcmp((string)$b['asset_id'],(string)$formInfo['bench'][0]['asset_id'])==0){
+                        if(strcmp($b['asset_id'],$formInfo['bench'][0]['asset_id'])==0){?>
+                            <option value="<?php echo $b['asset_id']; ?>" selected><?php echo $b['name'];?></option>
+                        <?php }else{ ?>
+                            <option value="<?php echo $b['asset_id']; ?>"><?php echo $b['name']; ?></option>
+                        <?php }
+                    }
                     ?>
-                </select>-->
+                </select>
                     <div class="control-group">
                         <label class="control-label">Start time:</label>
                         <div class="controls input-append date form_datetime" data-date="" data-link-field="dtp_input1">
@@ -129,7 +129,7 @@ if (checkLogined() == true) {
                         <?php } else if ($Object->getUserLevel() == 3) { ?>
                             <option value="3">Approved</option>
                             <option value="2">Wait for technician's approval</option>
-        <?php } ?>
+                        <?php } ?>
                         <option value="9">Rejected</option>
                     </select> 
 
