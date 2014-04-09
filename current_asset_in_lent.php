@@ -95,15 +95,9 @@ if (checkLogined() == true) {
                 $currentTime = $formInfoArray[0]['NOW()'];
                 ?>
                 <article>
-                    <form action="functions/FormProcessor.php" method="post" class="" onSubmit="return confirm('Selected forms will be deleted. Are you sure?')">
-                        <label for="Delete Form">Action: </label>
-                        <input type="submit" class="actionBtn" name="Delete Form" value="Delete" id="delete_form">
-                        <br>
-                        <br>
                         <p>Current Time: <?php echo $currentTime;?></p>
                         <table>
                             <tr>
-                                <th><input type="checkbox" class="admin_mem_checkBox" name="all" onClick="check_all(this, 'row_selected[]')"></th>
                                 <th>Form ID</th>
                                 <th>Asset ID</th>
                                 <th>Asset Name</th>
@@ -143,7 +137,6 @@ if (checkLogined() == true) {
                                 </tr>
         <?php } ?>
                         </table>
-                    </form>
                     <!--///////////////////////-->
                 </article>
             </body>
