@@ -30,7 +30,7 @@ try {
                 echo $returnMsg;
             } else {
                 try {
-                    if (formSubmitNoAsset($student_id_list, $project_title, $professor_id, $course_code, $bench, 'l', $start_time, $end_time) == true) {
+                    if (formSubmitNoAsset($student_id_list, $project_title, $professor_id, $course_code, $bench, "1", $start_time, $end_time) == true) {
                         header('Refresh: 3;url=../forms/experiment_reservation_form.php');
                         //unset($_SESSION['experiment_reservation_form']);
                         echo 'Form submit success!';
@@ -83,7 +83,7 @@ try {
                     header('Refresh: 3;url=../forms/sopChecker.php');
                 } else {
                     try {
-                        if (formSubmit($student_id_list, $asset_list, $project_title, $professor_id, $course_code, $bench, 'l', $start_time, $end_time) == true) {
+                        if (formSubmit($student_id_list, $asset_list, $project_title, $professor_id, $course_code, $bench, "1", $start_time, $end_time) == true) {
                             header('Refresh: 3;url=../forms/experiment_reservation_form.php');
                             unset($_SESSION['experiment_reservation_form']);
                             echo 'Form submit success!';
@@ -234,33 +234,64 @@ try {
         $end_time = $_POST['end_time'];
         $checkAssetCount = 0;
         $returnMsg = "";
-        foreach ($asset_list as $asset) {
-            if (checkAssetOverlap($asset, 3, $start_time, $end_time) || checkAssetOverlap($asset, 7, $start_time, $end_time) || checkAssetOverlap($asset, 4, $start_time, $end_time)) {
-                $temp = getAssetsByID($asset);
-                $returnMsg = $returnMsg . "Asset ID: " . $asset . " Asset Name: " . $temp[0]['name'] . " Asset Type: " . $temp[0]['type'] . " have been booked.<br>";
-                $checkAssetCount++;
+        if ($status == 9) {
+            if (edit_and_approveForm($form_id, $project_title, $course_code, $asset_list, $status, $bench, $start_time, $end_time) == TRUE) {
+                header('Refresh: 3;url=' . $_SERVER['HTTP_REFERER']);
+                echo 'Form approve success!';
             }
-        }
-        if (checkAssetOverlap($bench, 3, $start_time, $end_time) || checkAssetOverlap($bench, 7, $start_time, $end_time) || checkAssetOverlap($bench, 4, $start_time, $end_time)) {
-            $temp = getAssetsByID($bench);
-            $returnMsg = $returnMsg . "Asset ID: " . $bench . " Asset Name: " . $temp[0]['name'] . " Asset Type: " . $temp[0]['type'] . " have been booked.<br>";
-            $checkAssetCount++;
-        }
-        if ($checkAssetCount > 0) {
-            header('Refresh: 3;url=' . $_SERVER['HTTP_REFERER']);
-            echo $returnMsg;
-        }
-        if ($checkAssetCount == 0) {
-            try {
-                if (edit_and_approveForm($form_id, $project_title, $course_code, $asset_list, $status, $bench, $start_time, $end_time) == TRUE) {
-                    echo 'Form approve success!';
-                    //header('Refresh: 3;url=../form_approve_management.php');
-                } else {
-                    echo 'Form approve fail!<br> error occur.';
-                    //header('Refresh: 3;url=../form_approve_management.php');
+        } else {
+            if (!isset($_POST['asset'])) {
+                if (checkAssetOverlap($bench, 3, $start_time, $end_time) || checkAssetOverlap($bench, 7, $start_time, $end_time) || checkAssetOverlap($bench, 4, $start_time, $end_time)) {
+                    $temp = getAssetsByID($bench);
+                    $returnMsg = $returnMsg . "Asset ID: " . $bench . " Asset Name: " . $temp[0]['name'] . " Asset Type: " . $temp[0]['type'] . " have been booked.<br>";
+                    $checkAssetCount++;
                 }
-            } catch (Exception $e) {
-                echo "module process fail\n";
+                if ($checkAssetCount > 0) {
+                    header('Refresh: 3;url=' . $_SERVER['HTTP_REFERER']);
+                    echo $returnMsg;
+                } else {
+                    try {
+                        if (edit_and_approveFormNoAsset($form_id, $project_title, $course_code,  $status, $bench, $start_time, $end_time) == TRUE) {
+                            echo 'Form approve success!';
+                            //header('Refresh: 3;url=../form_approve_management.php');
+                        } else {
+                            echo 'Form approve fail!<br> error occur.';
+                            //header('Refresh: 3;url=../form_approve_management.php');
+                        }
+                    } catch (Exception $e) {
+                        echo "Create object failed.\n";
+                    }
+                }
+            } else {
+                foreach ($asset_list as $asset) {
+                    if (checkAssetOverlap($asset, 3, $start_time, $end_time) || checkAssetOverlap($asset, 7, $start_time, $end_time) || checkAssetOverlap($asset, 4, $start_time, $end_time)) {
+                        $temp = getAssetsByID($asset);
+                        $returnMsg = $returnMsg . "Asset ID: " . $asset . " Asset Name: " . $temp[0]['name'] . " Asset Type: " . $temp[0]['type'] . " have been booked.<br>";
+                        $checkAssetCount++;
+                    }
+                }
+                if (checkAssetOverlap($bench, 3, $start_time, $end_time) || checkAssetOverlap($bench, 7, $start_time, $end_time) || checkAssetOverlap($bench, 4, $start_time, $end_time)) {
+                    $temp = getAssetsByID($bench);
+                    $returnMsg = $returnMsg . "Asset ID: " . $bench . " Asset Name: " . $temp[0]['name'] . " Asset Type: " . $temp[0]['type'] . " have been booked.<br>";
+                    $checkAssetCount++;
+                }
+                if ($checkAssetCount > 0) {
+                    header('Refresh: 3;url=' . $_SERVER['HTTP_REFERER']);
+                    echo $returnMsg;
+                }
+                if ($checkAssetCount == 0) {
+                    try {
+                        if (edit_and_approveForm($form_id, $project_title, $course_code, $asset_list, $status, $bench, $start_time, $end_time) == TRUE) {
+                            echo 'Form approve success!';
+                            //header('Refresh: 3;url=../form_approve_management.php');
+                        } else {
+                            echo 'Form approve fail!<br> error occur.';
+                            //header('Refresh: 3;url=../form_approve_management.php');
+                        }
+                    } catch (Exception $e) {
+                        echo "module process fail\n";
+                    }
+                }
             }
         }
     } else if (isset($_POST['lent'])) {

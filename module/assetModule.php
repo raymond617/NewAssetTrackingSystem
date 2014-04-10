@@ -44,7 +44,7 @@ function updateAsset($asset_id, $type, $status, $name, $days_b4_alert, $lab_id, 
     global $pdo;
     $stmt = $pdo->prepare('update assets set type=? , status=?, name=?, days_b4_alert=? ,lab_id=? , sop=? where asset_id = ?');
     try {
-        if ($stmt->execute(array($type, $status, $name, $days_b4_alert, $lab_id, $asset_id, $sop)) == true) {
+        if ($stmt->execute(array($type, $status, $name, $days_b4_alert, $lab_id, $sop, $asset_id )) == true) {
             return true;
         } else {
             return false;
@@ -121,7 +121,7 @@ AND a.asset_id = f.asset_id');
 function getAssetWithSOP(array $asset_id){
     global $pdo;
     $ids = join(',',$asset_id);
-    $stmt = $pdo->query('SELECT asset_id,name,sop FROM `assets` WHERE sop is not null and asset_id IN ('.$ids.')');
+    $stmt = $pdo->query('SELECT asset_id,name,sop FROM `assets` WHERE sop is not null and sop <> "" and asset_id IN ('.$ids.')');
     $stmt->execute();
     $assetWithSOPList = $stmt->fetchAll();
     return $assetWithSOPList;

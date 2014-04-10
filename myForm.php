@@ -102,8 +102,8 @@ if (checkLogined() == true) {
                                     <td><?php echo $row['project_title'] ?></td>
                                     <td><?php foreach($row['user_array'] as $value) echo $value['id'].'<br>' ?></td>
                                     <td><?php if(isset($row['bench'][0])) {echo "ID:".$row['bench'][0]['asset_id']."  Name:".$row['bench'][0]['name'];} ?></td>
-                                    <td><?php echo $row['asset_array'][0]['start_time'] ?></td>
-                                    <td><?php echo $row['asset_array'][0]['end_time'] ?></td>
+                                    <td><?php if(isset($row['bench'][0])) {echo $row['bench'][0]['start_time']; }else echo $row['asset_array'][0]['start_time']; ?></td>
+                                    <td><?php if(isset($row['bench'][0])) {echo $row['bench'][0]['end_time']; }else echo $row['asset_array'][0]['end_time'] ?></td>
                                     <td><?php echo statusTranslation($row['status']); ?></td>
                                     <td>
                                         <?php if(strcmp($row['status'],'1')==0 ||strcmp($row['status'],'6')==0) {?>

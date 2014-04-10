@@ -5,7 +5,7 @@ require_once (rootPath() . 'module/assetModule.php');
 session_start();
 if (checkLogined() == true) {
     $Object = $_SESSION['object'];
-    if ($Object->getUserLevel() >=1) {
+    if ($Object->getUserLevel() >= 1) {
         $currentFormID = $_GET['form_id'];
         $formInfo = $_SESSION['object']->getFormInfo($currentFormID);
         ?>
@@ -26,25 +26,28 @@ if (checkLogined() == true) {
                     #p_scents a,#asset_list a{                    
                         display:inline;
                     }
+                    .asset_type,#bench,.asset{
+                        display:inline;
+                    }
                 </style>
             </head>
             <body>
-                <?php if($formInfo['status'] ==7){?>
-                <h2>Detail of equipiment form</h2>
-                <?php }else{ ?>
-                <h2>Edit equipiment form</h2>
+                <?php if ($formInfo['status'] == 7) { ?>
+                    <h2>Detail of equipiment form</h2>
+                <?php } else { ?>
+                    <h2>Edit equipiment form</h2>
                 <?php } ?>
                 <form action="../functions/FormProcessor.php" method="post" id="prof_form_approve">
                     <label for="formID">Form ID:</label>
                     <input id="formID" name="formID" type="text" value="<?php echo $formInfo['form_id'] ?>" readonly>
                     <label for="studID">Student IDs:</label>
-                    <?php foreach ($formInfo['user_array'] as $value){ ?>
+                    <?php foreach ($formInfo['user_array'] as $value) { ?>
                         <input id="studID" name="studID[]" type="text" value="<?php echo $value['id'] ?>" readonly>
                     <?php } ?>
-                    
+
                     <label for="appl_time">Apply Time:</label>
                     <input id="appl_time" name="appl_time" type="text" value="<?php echo $formInfo['apply_timestamp']; ?>" readonly>
-                   
+
                     <div class="control-group">
                         <label class="control-label">Start time:</label>
                         <div class="controls input-append date form_datetime" data-date="" data-link-field="dtp_input1">
@@ -65,13 +68,13 @@ if (checkLogined() == true) {
                     </div>
                     <div id="asset_list">
                         <?php $types = $_SESSION['object']->getAssetTypes(); ?>
-                        <p><label for="assets">Assets Type &amp; Name:</label> <a href="#" id="addAsset">Add another asset</a>
+                        <p><label for="assets">Assets Type &amp; Name:</label> <a href="#" id="addAsset">Add another asset</a><br>
                             <?php
                             $i = 1;
                             foreach ($formInfo['asset_array'] as $value) {
                                 ?>
                                 <label for='assetType<?php echo $i; ?>'><?php echo $i; ?></label>
-                                <select name="type[]" id="assetType<?php echo $i; ?>" onchange="getAssetByType(this, '#asset<?php echo $i; ?>');">
+                                <select name="type[]" class="asset_type" id="assetType<?php echo $i; ?>" onchange="getAssetByType(this, '#asset<?php echo $i; ?>');">
                                     <?php
                                     foreach ($types as $x) {
                                         if (strcmp($x['type'], $value['type']) == 0) {
@@ -85,7 +88,7 @@ if (checkLogined() == true) {
                                     ?>
                                 </select>
                                 <?php $assets = $_SESSION['object']->getAssetByType($value['type']); ?>
-                                <select name="asset[]" id="asset<?php echo $i; ?>">
+                                <select name="asset[]" class="asset" id="asset<?php echo $i; ?>" onchange="showTimetableLink(this, '#timetable1');">
                                     <?php
                                     foreach ($assets as $y) {
                                         if (strcmp($y['name'], $value['name']) == 0) {
@@ -93,41 +96,42 @@ if (checkLogined() == true) {
                                             <option value="<?php echo $y['asset_id'] ?>" selected><?php echo $y['name'] ?></option>
                                         <?php } else { ?>
                                             <option value="<?php echo $y['asset_id'] ?>"><?php echo $y['name'] ?></option>
-                                        <?php
+                                            <?php
                                         }
                                     }
                                     ?>
-                                </select></p>
+                                </select><a href="" id="timetable1" onclick=""></a></p>
                             <?php
                             $i++;
                         }
                         ?>
                     </div>
                     <label for="status">Status:</label>
-                    <?php $status = $formInfo['status']; 
-                    if($Object->getUserLevel() !=3){?>
-                    <input type="text" value="<?php echo statusTranslation($status)?>" readonly>
-                    <input type="hidden" name="status"value="<?php echo $status?>">
-                    <?php }else if($Object->getUserLevel() ==3){?>
-                    <select name="status" form="prof_form_approve" id="status">
-                        <option value="6">Wait for Approved</option>
-                        <option value="7">Approved</option>
-                        <option value="9">Rejected</option>
-                    </select> 
-                    <?php }?>
+                    <?php $status = $formInfo['status'];
+                    if ($Object->getUserLevel() != 3) {
+                        ?>
+                        <input type="text" value="<?php echo statusTranslation($status) ?>" readonly>
+                        <input type="hidden" name="status"value="<?php echo $status ?>">
+        <?php } else if ($Object->getUserLevel() == 3) { ?>
+                        <select name="status" form="prof_form_approve" id="status">
+                            <option value="6">Wait for Approved</option>
+                            <option value="7">Approved</option>
+                            <option value="9">Rejected</option>
+                        </select> 
+        <?php } ?>
 
                     <input id="action" name="equipiment_approve" type="hidden" value="true">
-                    <?php if($status == 6){?>
-                    <input id="submit" type="submit" value="Submit Form">
-                    <?php }else{ ?>
-                    <input id="submit" type="submit" value="Submit Form" disabled="disabled">
+                    <?php if ($status == 6) { ?>
+                        <input id="submit" type="submit" value="Submit Form">
+                    <?php } else { ?>
+                        <input id="submit" type="submit" value="Submit Form" disabled="disabled">
                     <?php } ?>
-                    <?php //print_r($formInfo['asset_array']); ?>
+        <?php //print_r($formInfo['asset_array']);  ?>
                 </form>
             </body>
             <script type="text/javascript" src="../javascript/jquery-1.8.3.min.js" charset="UTF-8"></script>
-        <script type="text/javascript" src="../javascript/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../javascript/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+            <script type="text/javascript" src="../javascript/bootstrap.min.js"></script>
+            <script type="text/javascript" src="../javascript/bootstrap-datetimepicker.js" charset="UTF-8"></script>
             <script type="text/javascript">
                                     var text1 = "<?php echo $status; ?>";
                                     $("select option").filter(function() {
@@ -141,11 +145,11 @@ if (checkLogined() == true) {
                                             var i = $('#asset_list p').size() + 1;
 
                                             $('#addAsset').live('click', function() {
-                                                $('<p><label for="asset"><a href="#" id="remAsset">Remove</a><select name="type[]" onchange="getAssetByType(this,\'#asset' + i + '\');"><option selected="selected">select a type</option><?php
+                                                $('<p><label for="asset"><a href="#" id="remAsset">Remove</a><select name="type[]" class="asset_type" onchange="getAssetByType(this,\'#asset' + i + '\');"><option selected="selected">select a type</option><?php
         foreach ($types as $value) {
             echo '<option value="' . $value['type'] . '">' . $value['type'] . '</option>';
         }
-        ?></select><select name="asset[]" id="asset' + i + '" ></select></label></p>').appendTo(scntDiv);
+        ?></select><select name="asset[]" class="asset" id="asset' + i + '" onchange="showTimetableLink(this,\'#timetable' + i + '\');"></select><a href="" id="timetable' + i + '" onclick=""></a></label></p>').appendTo(scntDiv);
                                                 i++;
                                                 return false;
                                             });
@@ -206,34 +210,16 @@ if (checkLogined() == true) {
                                         if (endT <= startT)
                                             $("#end_time").css({'background-color': 'red'});
                                     }
-                                    $("#end_time").change(function() {
-                                        $.ajax({type: "GET",
-                                            url: "../ajax/checkTimeOverlapping.php",
-                                            data: "end_time=" + $(this).val() + "&start_time=" + $("#start_time").val() + "&bench_id=" + $("#bench").val(),
-                                            success: function(result) {
-                                                //alert(result);
-                                                //if (result === "success")
-                                                    //alert("OK");
-                                                //else
-                                                if (result !== "success")
-                                                    alert("Bench time overlap");
-                                            }});
-                                    });
-                                    $("#start_time").change(function() {
-                                        $.ajax({type: "GET",
-                                            url: "../ajax/checkTimeOverlapping.php",
-                                            data: "end_time=" + $("#end_time").val() + "&start_time=" + $(this).val() + "&bench_id=" + $("#bench").val(),
-                                            success: function(result) {
-                                                //alert(result);
-                                                if (result !== "success")
-                                                    alert("Bench time overlap");
-                                            }});
-                                    });
-                                    function clearTime(){
-                                        $('#start_time').val('');
-                                        $('#end_time').val('');
+                                    function showTimetableLink(self, targetID) {
+                                        var asset_id = $(self).val();
+                                        $(targetID).attr("href", "JavaScript:newPopup('../functions/timetable.php?asset_id=" + asset_id + "');");
+                                        $(targetID).text("Timetable");
+                                        //$(targetID).attr("onclick","window.open('../functions/timetable.php?asset_id="+asset_id+"','_blank');" );
                                     }
-                                    
+                                    function newPopup(url) {
+                                        popupWindow = window.open(url, 'popUpWindow', 'height=500,width=700,left=0,top=0,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+                                    }
+
             </script>
         </html>
         <?php

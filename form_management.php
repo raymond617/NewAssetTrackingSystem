@@ -117,7 +117,7 @@ if (checkLogined() == true) {
                                     <td><?php echo $row['bench'][0]['end_time'] ?></td>
                                     <td><?php echo $row['status'] ?></td>
                                     <td>
-                                        <a class="fancybox" data-fancybox-type="iframe" href="forms/editApplForm.php?form_id=<?php echo $row['form_id'] ?>"><?php if($row['status']>=3) echo "Detail"; else echo "Detail or Edit"?></a>
+                                        <a class="fancybox" data-fancybox-type="iframe" href="forms/editApplForm.php?form_id=<?php echo $row['form_id'] ?>"><?php if($row['status']>=3 && $row['status']!=9) echo "Detail"; else echo "Detail or Edit"?></a>
                                         <a class="fancybox" data-fancybox-type="iframe" href="functions/FormProcessor.php?delete_form=true&form_id=<?php echo $row['form_id'] ?>">Delete</a>
                                     </td>
                                 </tr>

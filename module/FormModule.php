@@ -33,10 +33,10 @@ function formSubmit(array $userIDs, array $assets_id, $project_title, $professor
             $count++;
         }
         foreach ($assets_id as $value) {
-            $stmt2->execute(array($newID, $value, $start_time, $end_time, '1'));
+            $stmt2->execute(array($newID, $value, $start_time, $end_time, $status));
             $count++;
         }
-        if ($stmt2->execute(array($newID, $bench, $start_time, $end_time, '1')) == true) {
+        if ($stmt2->execute(array($newID, $bench, $start_time, $end_time, $status))) {
             $count++;
         }
         if ($count == 2 + count($userIDs) + count($assets_id)){
@@ -66,7 +66,7 @@ function formSubmitNoAsset(array $userIDs, $project_title, $professor_id, $cours
             $count++;
         }
         
-        if ($stmt2->execute(array($newID, $bench, $start_time, $end_time, '1')) == true) {
+        if ($stmt2->execute(array($newID, $bench, $start_time, $end_time, $status))) {
             $count++;
         }
         if ($count == 2 + count($userIDs)){
@@ -136,7 +136,7 @@ ORDER BY `apply_timestamp` ');
 function listAllEquipimentForms() {
     global $pdo;
     //$stmt = $pdo->prepare('select * from appl_form where status = 6 or status = 7 ORDER BY `apply_timestamp`');
-    $stmt = $pdo->prepare('select af.* from appl_form af, form_r_asset f where af.form_id = f.form_id and
+    $stmt = $pdo->prepare('select distinct af.* from appl_form af , form_r_asset f where af.form_id = f.form_id and
 (f.status BETWEEN 4 and 7)and
 f.form_id NOT IN (select form_id from form_r_asset f,assets a where a.type="bench" and f.asset_id = a.asset_id)ORDER BY `apply_timestamp` ');
     $stmt->execute();
@@ -269,6 +269,29 @@ function edit_and_approveForm($form_id,$project_title,$course_code,$asset_array,
         }
     }
     if($count == 3+ count($asset_array)){
+        return true;
+    }else{
+        return false;
+    }
+}
+function edit_and_approveFormNoAsset($form_id,$project_title,$course_code,$status,$bench,$start_time,$end_time){
+    global $pdo;
+    $count =0;
+    $stmt = $pdo->prepare('update appl_form set project_title = ?,course_code=?,status=? where form_id =?');
+    $stmt2 =$pdo->prepare('DELETE From form_r_asset where form_id = ? AND asset_id IN (SELECT asset_id from assets)');
+    $stmt3 = $pdo->prepare('insert into form_r_asset (form_id,asset_id,start_time,end_time,status) values (?,?,?,?,?)');
+    
+    if($stmt->execute(array($project_title,$course_code,$status,$form_id))){
+        $count++;
+    }
+    if($stmt2->execute(array($form_id))){
+        $count++;
+    }
+    if($stmt3->execute(array($form_id,$bench,$start_time,$end_time,$status))){
+        $count++;
+    }
+    
+    if($count == 3){
         return true;
     }else{
         return false;
@@ -429,7 +452,8 @@ function returnAsset($asset_id){
     $stmt2 = $pdo->prepare('select form_id from form_r_asset where asset_id = ? and status = 4');
     $stmt3 = $pdo->prepare('update appl_form set status = 5 where form_id = ?');
     $stmt2->execute(array($asset_id));
-    $form_id = $stmt2->fetch()[0];
+    $temp2 = $stmt2->fetch();
+    $form_id =$temp2[0];
     if($stmt->execute(array(5,$timestamp,$asset_id,4)))
             if($stmt->rowCount()>=1){
                 $count = countAssetStillInLendingOfTheForm($form_id);

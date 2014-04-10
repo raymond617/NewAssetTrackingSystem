@@ -38,10 +38,7 @@ if (isset($_SESSION['approved']) && $_SESSION['approved'] == 1) {
                 #p_scents a,#asset_list a{                    
                     display:inline;
                 }
-                .asset_type{
-                    display:inline;
-                }
-                .asset{
+                .asset_type,#bench,.asset{
                     display:inline;
                 }
             </style>
@@ -67,14 +64,14 @@ if (isset($_SESSION['approved']) && $_SESSION['approved'] == 1) {
                 <label for="course_code">Course code:</label>
                 <input id="course_code" name="course_code" type="text" value="<?php if(hvSerf())echo $_SESSION['experiment_reservation_form']['course_code'];?>">
                 <label for="bench">Select a bench</label>
-                <select name="bench" id="bench">
+                <select name="bench" id="bench" onchange="showTimetableLink(this,'#benchTimetable'); clearTime();">
                     <?php
                     $benches = getBenchList();
                     foreach ($benches as $b) {
                         echo "<option value='" . $b['asset_id'] . "'>" . $b['name'] . "</option>";
                     }
                     ?>
-                </select>
+                </select><a href="" id="benchTimetable" onclick=""></a>
                 <div class="control-group">
                     <label class="control-label">Start time:</label>
                     <div class="controls input-append date form_datetime" data-date="" data-link-field="dtp_input1">
@@ -198,6 +195,10 @@ if (isset($_SESSION['approved']) && $_SESSION['approved'] == 1) {
                             function newPopup(url) {
                                 popupWindow = window.open(url,'popUpWindow','height=500,width=700,left=0,top=0,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
                             }
+                            function clearTime(){
+                                        $('#start_time').val('');
+                                        $('#end_time').val('');
+                                    }
                             
         </script>
         <script>

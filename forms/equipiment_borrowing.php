@@ -35,6 +35,9 @@ if (isset($_SESSION['approved']) && $_SESSION['approved'] == 1) {
                 #p_scents a,#asset_list a{                    
                     display:inline;
                 }
+                .asset_type,#bench,.asset{
+                    display:inline;
+                }
             </style>
         </head>
         <header>
@@ -68,8 +71,8 @@ if (isset($_SESSION['approved']) && $_SESSION['approved'] == 1) {
                 </div>
                 <div id="asset_list">
                     <?php $types = $_SESSION['object']->getAssetTypes();?>
-                    <p><label for="assetType">Asset Type &AMP; Name:  <a href="#" id="addAsset">Add another asset</a>
-                            <select name="type[]" id="assetType" onchange="getAssetByType(this,'#asset1');">
+                    <p><label for="assetType">Asset Type &AMP; Name:  <a href="#" id="addAsset">Add another asset</a><br>
+                            <select name="type[]" id="assetType" class="asset_type" onchange="getAssetByType(this,'#asset1');">
                                 <option selected="selected">select a type</option>
                                 <?php 
                                 foreach ($types as $value) {
@@ -77,7 +80,7 @@ if (isset($_SESSION['approved']) && $_SESSION['approved'] == 1) {
                                     <option value="<?php echo $value['type']; ?>"><?php echo $value['type']; ?></option>
                                 <?php } ?>
                             </select>
-                            <select name="asset[]" id="asset1"></select></label></p>
+                            <select name="asset[]" id="asset1" class="asset" onchange="showTimetableLink(this,'#timetable1');"></select><a href="" id="timetable1" onclick=""></a></label></p>
                             <!--<input id="asset1" name="asset[]" type="text" value=""></label></p>-->
 
                 </div>
@@ -99,9 +102,9 @@ if (isset($_SESSION['approved']) && $_SESSION['approved'] == 1) {
                                     var i = $('#asset_list p').size() + 1;
 
                                     $('#addAsset').live('click', function() {
-                                        $('<p><label for="asset"><a href="#" id="remAsset">Remove</a><select name="type[]" onchange="getAssetByType(this,\'#asset'+i+'\');"><option selected="selected">select a type</option><?php foreach ($types as $value) {
+                                        $('<p><label for="asset"><a href="#" id="remAsset">Remove</a><select name="type[]" class="asset_type" onchange="getAssetByType(this,\'#asset'+i+'\');"><option selected="selected">select a type</option><?php foreach ($types as $value) {
         echo '<option value="' . $value['type'] . '">' . $value['type'] . '</option>';
-    } ?></select><select name="asset[]" id="asset'+i+'" ></select></label></p>').appendTo(scntDiv);
+    } ?></select><select name="asset[]" class="asset" id="asset'+i+'" onchange="showTimetableLink(this,\'#timetable'+i+'\');"></select><a href="" id="timetable'+i+'" onclick=""></a></label></p>').appendTo(scntDiv);
                                         i++;
                                         return false;
                                     });
@@ -141,6 +144,15 @@ if (isset($_SESSION['approved']) && $_SESSION['approved'] == 1) {
                                     $("#end_time").css({'background-color': 'red'});
                                 else if(endT>startT && endTime != null)
                                     $("#end_time").css({'background-color': 'green'});
+                            }
+                            function showTimetableLink(self,targetID){
+                                var asset_id = $(self).val();
+                                $(targetID).attr("href","JavaScript:newPopup('../functions/timetable.php?asset_id="+asset_id+"');");
+                                $(targetID).text("Timetable");
+                                //$(targetID).attr("onclick","window.open('../functions/timetable.php?asset_id="+asset_id+"','_blank');" );
+                            }
+                            function newPopup(url) {
+                                popupWindow = window.open(url,'popUpWindow','height=500,width=700,left=0,top=0,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
                             }
         </script>
         <script>
