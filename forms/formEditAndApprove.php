@@ -26,6 +26,9 @@ if (checkLogined() == true) {
                     #p_scents a,#asset_list a{                    
                         display:inline;
                     }
+                    .asset_type,#bench,.asset{
+                        display:inline;
+                    }
                 </style>
             </head>
             <body>
@@ -46,21 +49,16 @@ if (checkLogined() == true) {
                     <input id="professor_id" name="professor_id" type="hidden" value="<?php echo $formInfo['prof_id']; ?>" >
                     <input id="professor" name="professor" type="text" value="<?php $temp = $_SESSION['object']->getProfessorName($formInfo['prof_id']); echo $temp[0][0]; ?>" disabled="disabled">
                     <label for="bench">Bench:</label>
-                    <input id="bench" type="text" value="<?php echo $formInfo['bench'][0]['name']; //." Asset ID: ".$formInfo['bench'][0]['asset_id']?>" readonly>
+                    <!--<input id="bench" type="text" value="<?php //echo $formInfo['bench'][0]['name']; //." Asset ID: ".$formInfo['bench'][0]['asset_id']?>" readonly>-->
                     <!--<input id="bench" name="bench" type="hidden" value="<?php //echo $formInfo['bench'][0]['asset_id']; ?>">-->
-                    <select name="bench" id="bench" onchange="clearTime();">
-                    <?php
-                    $benches = getBenchList();
-                    foreach ($benches as $b) {
-                        //if(strcmp((string)$b['asset_id'],(string)$formInfo['bench'][0]['asset_id'])==0){
-                        if(strcmp($b['asset_id'],$formInfo['bench'][0]['asset_id'])==0){?>
-                            <option value="<?php echo $b['asset_id']; ?>" selected><?php echo $b['name'];?></option>
-                        <?php }else{ ?>
-                            <option value="<?php echo $b['asset_id']; ?>"><?php echo $b['name']; ?></option>
-                        <?php }
-                    }
-                    ?>
-                </select>
+                    <select id="benchSelecter" name="bench" onchange="clearTime();
+                        showTimetableLink(this, '#benchTimetable');">
+                        <?php
+                        $benches = getBenchList();
+                        foreach ($benches as $b) { ?>
+                                <option value="<?php echo $b['asset_id']; ?>"><?php echo $b['name'];?></option>
+                        <?php }     ?>
+                </select><a href="" id="benchTimetable" onclick=""></a>
                     <div class="control-group">
                         <label class="control-label">Start time:</label>
                         <div class="controls input-append date form_datetime" data-date="" data-link-field="dtp_input1">
@@ -87,7 +85,7 @@ if (checkLogined() == true) {
                             foreach ($formInfo['asset_array'] as $value) {
                                 ?>
                                 <p><label for='assetType<?php echo $i; ?>'><?php echo $i; ?></label><a href="#" id="remAsset">Remove</a>
-                                <select name="type[]" id="assetType<?php echo $i; ?>" onchange="getAssetByType(this, '#asset<?php echo $i; ?>');">
+                                <select name="type[]" class="asset_type" id="assetType<?php echo $i; ?>" onchange="getAssetByType(this, '#asset<?php echo $i; ?>');">
                                     <?php
                                     foreach ($types as $x) {
                                         if (strcmp($x['type'], $value['type']) == 0) {
@@ -101,7 +99,7 @@ if (checkLogined() == true) {
                                     ?>
                                 </select>
                                 <?php $assets = $_SESSION['object']->getAssetByType($value['type']); ?>
-                                <select name="asset[]" id="asset<?php echo $i; ?>">
+                                <select name="asset[]" class="asset" id="asset<?php echo $i; ?>"  onchange="showTimetableLink(this,'#timetable1');">
                                     <?php
                                     foreach ($assets as $y) {
                                         if (strcmp($y['name'], $value['name']) == 0) {
@@ -113,7 +111,7 @@ if (checkLogined() == true) {
                                         }
                                     }
                                     ?>
-                                </select></p>
+                                </select><a href="" id="timetable1" onclick=""></a></p>
                             <?php
                             $i++;
                         }
@@ -142,6 +140,11 @@ if (checkLogined() == true) {
             <script type="text/javascript" src="../javascript/jquery-1.8.3.min.js" charset="UTF-8"></script>
         <script type="text/javascript" src="../javascript/bootstrap.min.js"></script>
         <script type="text/javascript" src="../javascript/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('#benchSelecter').val("<?php echo $formInfo['bench'][0]['asset_id'];?>");
+            });
+            </script>
             <script type="text/javascript">
                                     var text1 = "<?php echo $status; ?>";
                                     $("select option").filter(function() {
@@ -175,15 +178,13 @@ if (checkLogined() == true) {
                                             var scntDiv = $('#asset_list');
                                             var i = $('#asset_list p').size() + 1;
 
-                                            $('#addAsset').live('click', function() {
-                                                $('<p><label for="asset"><a href="#" id="remAsset">Remove</a><select name="type[]" onchange="getAssetByType(this,\'#asset' + i + '\');"><option selected="selected">select a type</option><?php
-        foreach ($types as $value) {
-            echo '<option value="' . $value['type'] . '">' . $value['type'] . '</option>';
-        }
-        ?></select><select name="asset[]" id="asset' + i + '" ></select></label></p>').appendTo(scntDiv);
-                                                i++;
-                                                return false;
-                                            });
+                                             $('#addAsset').live('click', function() {
+                                        $('<p><label for="asset"><a href="#" id="remAsset">Remove</a><select name="type[]" class="asset_type" onchange="getAssetByType(this,\'#asset'+i+'\');"><option selected="selected">select a type</option><?php foreach ($types as $value) {
+        echo '<option value="' . $value['type'] . '">' . $value['type'] . '</option>';
+    } ?></select><select name="asset[]" class="asset" id="asset'+i+'" onchange="showTimetableLink(this,\'#timetable'+i+'\');"></select><a href="" id="timetable'+i+'" onclick=""></a></label></p>').appendTo(scntDiv);
+                                        i++;
+                                        return false;
+                                    });
 
                                             $('#remAsset').live('click', function() {
                                                 if (i > 2) {
@@ -247,9 +248,7 @@ if (checkLogined() == true) {
                                             data: "end_time=" + $(this).val() + "&start_time=" + $("#start_time").val() + "&bench_id=" + $("#bench").val(),
                                             success: function(result) {
                                                 //alert(result);
-                                                if (result === "success")
-                                                    alert("OK");
-                                                else
+                                                if (result !== "success")
                                                     alert("overlapping");
                                             }});
                                     });
@@ -263,6 +262,15 @@ if (checkLogined() == true) {
                                                     alert("overlapping");
                                             }});
                                     });
+                                    function showTimetableLink(self, targetID) {
+                                        var asset_id = $(self).val();
+                                        $(targetID).attr("href", "JavaScript:newPopup('../functions/timetable.php?asset_id=" + asset_id + "');");
+                                        $(targetID).text("Timetable");
+                                        //$(targetID).attr("onclick","window.open('../functions/timetable.php?asset_id="+asset_id+"','_blank');" );
+                                    }
+                                    function newPopup(url) {
+                                        popupWindow = window.open(url, 'popUpWindow', 'height=500,width=700,left=0,top=0,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+                                    }
                                     function clearTime(){
                                         $('#start_time').val('');
                                         $('#end_time').val('');

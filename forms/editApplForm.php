@@ -55,23 +55,15 @@ if (checkLogined() == true) {
                     <input id="professor" name="professor" type="text" value="<?php $temp = $_SESSION['object']->getProfessorName($formInfo['prof_id']);
                     echo $temp[0][0]; ?>" disabled="disabled">
                     <label for="bench">Bench:</label>
-                    <!--<input id="bench" type="text" value="<?php echo $formInfo['bench'][0]['name']; //." Asset ID: ".$formInfo['bench'][0]['asset_id']  ?>" readonly>-->
-                    <!--<input id="bench" name="bench" type="hidden" value="<?php //echo $formInfo['bench'][0]['asset_id'];  ?>">-->
-                    <select name="bench" id="bench" onchange="clearTime();
-                                    showTimetableLink(this, '#benchTimetable');" >
+                    <!--<input id="bench" type="text" value="<?php //echo $formInfo['bench'][0]['name']; //." Asset ID: ".$formInfo['bench'][0]['asset_id']  ?>" readonly>
+                    <input id="bench" type="text" value="<?php //echo $formInfo['bench'][0]['asset_id'];  ?>" readonly="">-->
+                    <select id="benchSelecter" name="bench" onchange="clearTime();
+                        showTimetableLink(this, '#benchTimetable');">
                         <?php
                         $benches = getBenchList();
-                        foreach ($benches as $b) {
-                            //if(strcmp((string)$b['asset_id'],(string)$formInfo['bench'][0]['asset_id'])==0){
-                            if (strcmp($b['asset_id'], $formInfo['bench'][0]['asset_id']) == 0) {
-                                ?>
-                                <option value="<?php echo $b['asset_id']; ?>" selected><?php echo $b['name']; ?></option>
-                            <?php } else { ?>
-                                <option value="<?php echo $b['asset_id']; ?>"><?php echo $b['name']; ?></option>
-                            <?php
-                            }
-                        }
-                        ?>
+                        foreach ($benches as $b) { ?>
+                                <option value="<?php echo $b['asset_id']; ?>"><?php echo $b['name'];?></option>
+                        <?php }     ?>
                     </select><a href="" id="benchTimetable" onclick=""></a>
                     <div class="control-group">
                         <label class="control-label">Start time:</label>
@@ -159,6 +151,11 @@ if (checkLogined() == true) {
             <script type="text/javascript" src="../javascript/jquery-1.8.3.min.js" charset="UTF-8"></script>
             <script type="text/javascript" src="../javascript/bootstrap.min.js"></script>
             <script type="text/javascript" src="../javascript/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+            <script type="text/javascript">
+            $(function() {
+                $('#benchSelecter').val("<?php echo $formInfo['bench'][0]['asset_id'];?>");
+            });
+            </script>
             <script type="text/javascript">
                                     var text1 = "<?php echo $status; ?>";
                                     $("select option").filter(function() {

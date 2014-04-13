@@ -13,10 +13,11 @@ if (checkLogined() == true) {
     if ($Object->getUserLevel() >= 1) {
         if (isset($_GET['asset_id'])) {
             $asset_id = $_GET['asset_id'];
+            $asset_info = getAssetsByID($asset_id);
             $timelistArray = getAssetReserveTime($asset_id);
             $editedArray = array(); // open an array for save edited data to json
             foreach ($timelistArray as $value) {
-                if($value['status']==3 || $value['status']==7 ||$value['status']==4){
+                if($value['status']==3 || $value['status']==7 ||$value['status']==4||$value['status']==5){
                     $oneRow = array("id"=> $value['form_id'],"start"=>dateConvert($value['start_time']),"end"=>dateConvert($value['end_time']),"title"=>$value['form_id']);
                     array_push($editedArray,$oneRow);
                 }
@@ -52,6 +53,7 @@ if (checkLogined() == true) {
             <body>
                 <header class="row">
                     <h2 id="page_name">Asset timetable</h2>
+                    <p>Type: <?php echo $asset_info[0]['type'];?> Name: <?php echo $asset_info[0]['name'];?></p>
                 </header>
                 <div id='calendar'></div>
                 <article>
@@ -83,7 +85,9 @@ if (checkLogined() == true) {
                             return $(window).height() - $("h1").outerHeight() - 1;
                         },
                         readonly: true,
-                        
+                        eventClick : function(calEvent, $event) {
+                            window.open('../forms/editApplForm.php?form_id='+calEvent.title,'formDetail','height=500,width=700,left=0,top=0,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+                        },
                         eventMouseover: function(calEvent, $event) {
                         },
                         eventMouseout: function(calEvent, $event) {
@@ -95,6 +99,7 @@ if (checkLogined() == true) {
                             //callback(neededData);
                             callback(getEventData());
                         }
+                        
                     });
 
                     function resetForm($dialogContent) {

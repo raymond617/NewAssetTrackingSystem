@@ -106,9 +106,19 @@ if (checkLogined() == true) {
                                     <td><?php if(isset($row['bench'][0])) {echo $row['bench'][0]['end_time']; }else echo $row['asset_array'][0]['end_time'] ?></td>
                                     <td><?php echo statusTranslation($row['status']); ?></td>
                                     <td>
-                                        <?php if(strcmp($row['status'],'1')==0 ||strcmp($row['status'],'6')==0) {?>
+                                        <?php if(strcmp($row['status'],'1')==0 ||strcmp($row['status'],'6')==0) {
+                                            if(isset($row['bench'][0])) {?>
                                         <a class="fancybox" data-fancybox-type="iframe" href="forms/editApplForm.php?form_id=<?php echo $row['form_id'] ?>">Detail &AMP; Edit</a>
+                                            <?php }else{ ?>
+                                        <a class="fancybox" data-fancybox-type="iframe" href="forms/approveEquipimentForm.php?form_id=<?php echo $row['form_id'] ?>">Detail &AMP; Edit</a>
+                                            <?php } ?>
                                         <a class="fancybox" data-fancybox-type="iframe" href="functions/FormProcessor.php?delete_form=true&form_id=<?php echo $row['form_id'] ?>">Delete</a>
+                                        <?php }else{ 
+                                            if(isset($row['bench'][0])) {?>
+                                        <a class="fancybox" data-fancybox-type="iframe" href="forms/editApplForm.php?form_id=<?php echo $row['form_id'] ?>">Detail</a>
+                                            <?php }else{ ?>
+                                        <a class="fancybox" data-fancybox-type="iframe" href="forms/approveEquipimentForm.php?form_id=<?php echo $row['form_id'] ?>">Detail &AMP; Edit</a>
+                                            <?php } ?>
                                         <?php } ?>
                                     </td>
                                 </tr>

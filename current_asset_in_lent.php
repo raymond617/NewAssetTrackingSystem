@@ -114,7 +114,6 @@ if (checkLogined() == true) {
                                 <tr <?php 
                                 if($row['NOW()']>$row['end_time']){echo 'style="background-color:#FF8C8C;"';} if($row['NOW()']>$row['alert_time']){echo 'style="background-color:#FFFDA0;"';}
                                 ?>>    
-                                    <td class="narrowCol"><input type="checkbox" class="admin_mem_checkBox" name="row_selected[]" value="<?php echo $row['form_id'] ?>"></td>
                                     <td><?php echo $row['form_id'] ?></td>
                                     <td><?php echo $row['asset_id'] ?></td>
                                     <td><?php echo $row['name'] ?></td>

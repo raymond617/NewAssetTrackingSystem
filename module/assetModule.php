@@ -152,3 +152,10 @@ AND f.status =4');
     }
     return $assetAndUserArray;
 }
+function countBenchInUse($bench_id){
+    global $pdo;
+    $stmt = $pdo->prepare('select count(*) as hold from form_r_asset where asset_id = ? and status =3 and NOW() between start_time and end_time');
+    $stmt->execute(array($bench_id));
+    $haveHolded = $stmt->fetchColumn(0);
+    return $haveHolded;
+}

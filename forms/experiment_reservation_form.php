@@ -41,6 +41,15 @@ if (isset($_SESSION['approved']) && $_SESSION['approved'] == 1) {
                 .asset_type,#bench,.asset{
                     display:inline;
                 }
+                #map{
+                    float:right;
+                    width:55%;
+                    display:inline-block;
+                }
+                #reservation_form{
+                    display:inline-block;
+                    width:43%;
+                }
             </style>
         </head>
         <header>
@@ -109,8 +118,16 @@ if (isset($_SESSION['approved']) && $_SESSION['approved'] == 1) {
                 <input id="form_submit" type="submit" value="submit form">
 
             </form>
-            <div>
-
+            <div id="map">
+                <img src="../image/laboratory_map.png" alt="Laboratory map" usemap="#graphmap">
+                <map name="graphmap">
+                    <area shape="rect" coords="44.16,44.15,195.98,80.51" href="JavaScript:newPopup('../functions/timetable.php?asset_id=1')" alt="Bench 1">
+                    <area shape="rect" coords="44.16,122.07,195.98,158.43" href="JavaScript:newPopup('../functions/timetable.php?asset_id=11')" alt="Bench 2">
+                    <area shape="rect" coords="44.16,201.71,195.98,238.07" href="JavaScript:newPopup('../functions/timetable.php?asset_id=14')" alt="abcde">
+                    <area shape="rect" coords="251.8,44.15,403.62,80.51" href="JavaScript:newPopup('../functions/timetable.php?asset_id=30')" alt="coffee">
+                    <area shape="rect" coords="251.8,122.07,403.62,158.43" href="JavaScript:newPopup('../functions/timetable.php?asset_id=5')" alt="hello">
+                    <area shape="rect" coords="251.8,201.71,403.62,238.07" href="JavaScript:newPopup('../functions/timetable.php?asset_id=8')" alt="no.6">
+                </map>
             </div>
         </body>
         <script type="text/javascript" src="../javascript/jquery-1.8.3.min.js" charset="UTF-8"></script>

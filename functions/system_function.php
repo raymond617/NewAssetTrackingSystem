@@ -31,6 +31,8 @@ function statusTranslation($status){
             return "Rejected";
         case 4:
             return "Lending";
+        case 5:
+            return "Returned";
         default :
             return "Error";
     }
