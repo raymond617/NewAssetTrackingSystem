@@ -19,34 +19,34 @@ function acrossMidnight($start_time, $end_time) {
     }
 }
 
-function splitAcrossNightToDays($begin, $end, $form_id) {
+function splitAcrossNightToDays($begin, $end) {
     $timeslot = array();
 
     $begin_split = split(" ", $begin);
     $end_split = split(" ", $end);
-    $firstDay = array("id" =>$form_id, "start" => dateConvert($begin), "end" => dateConvert($begin_split[0] . " 23:59:59"), "title"=>$form_id);
+    $firstDay = array("start" => $begin, "end" => $begin_split[0] . " 23:59:59");
     array_push($timeslot, $firstDay);
 
     $secondStart = date('Y-m-d', strtotime(str_replace('-', '/', $begin_split[0]) . "+1 day")) . " 00:00:00";
     $secondEnd = date('Y-m-d', strtotime(str_replace('-', '/', $begin_split[0]) . "+1 day")) . " 23:59:59";
-    $secondDay = array("id" =>$form_id,"start" => dateConvert($secondStart), "end" => dateConvert($secondEnd), "title"=>$form_id);
+    $secondDay = array("start" => $secondStart, "end" => $secondEnd);
     array_push($timeslot, $secondDay);
 
     $lastSecondStart = date('Y-m-d', strtotime(str_replace('-', '/', $end_split[0]) . "-1 day")) . " 00:00:00";
     $lastSecondEnd = date('Y-m-d', strtotime(str_replace('-', '/', $end_split[0]) . "-1 day")) . " 23:59:59";
-    $lastSecondDay = array("id" =>$form_id,"start" => dateConvert($lastSecondStart), "end" => dateConvert($lastSecondEnd), "title"=>$form_id);
+    $lastSecondDay = array("start" => $lastSecondStart, "end" => $lastSecondEnd);
 
     $interval = DateInterval::createFromDateString('1 day');
     $periodStart = new DatePeriod(new DateTime($secondStart), $interval, new DateTime($lastSecondStart));
 
+    array_push($timeslot, $lastSecondDay);
+
     foreach ($periodStart as $dt) {
-        $oneDay = array("id" =>$form_id,"start" => dateConvert($dt->format("Y-m-d H:i:s")), "end" => dateConvert(str_replace("00:00:00", "23:59:59", $dt->format("Y-m-d H:i:s"))),"title"=>$form_id);
+        $oneDay = array("start" => $dt->format("Y-m-d H:i:s"), "end" => str_replace("00:00:00", "23:59:59", $dt->format("Y-m-d H:i:s")));
         array_push($timeslot, $oneDay);
     }
 
-    array_push($timeslot, $lastSecondDay);
-    
-    $lastDay = array("id" =>$form_id,"start" => dateConvert($end_split[0]) . " 00:00:00", "end" => dateConvert($end),"title"=>$form_id);
+    $lastDay = array("start" => $end_split[0] . " 00:00:00", "end" => $end);
     array_push($timeslot, $lastDay);
     
     return $timeslot;
@@ -59,16 +59,11 @@ if (checkLogined() == true) {
             $asset_id = $_GET['asset_id'];
             $asset_info = getAssetsByID($asset_id);
             $timelistArray = getAssetReserveTime($asset_id);
-            //print_r($timelistArray);
             $editedArray = array(); // open an array for save edited data to json
             foreach ($timelistArray as $value) {
                 if ($value['status'] == 3 || $value['status'] == 7 || $value['status'] == 4 || $value['status'] == 5) {
-                    if(acrossMidnight($value['start_time'],$value['end_time'])){
-                        $editedArray = array_merge($editedArray,splitAcrossNightToDays($value['start_time'], $value['end_time'] ,$value['form_id']));
-                    }else{
-                        $oneRow = array("id" => $value['form_id'], "start" => dateConvert($value['start_time']), "end" => dateConvert($value['end_time']), "title" => $value['form_id']);
-                        array_push($editedArray, $oneRow);
-                    }
+                    $oneRow = array("id" => $value['form_id'], "start" => dateConvert($value['start_time']), "end" => dateConvert($value['end_time']), "title" => $value['form_id']);
+                    array_push($editedArray, $oneRow);
                 }
             }
             $returnInJSON = json_encode($editedArray);
