@@ -26,7 +26,7 @@ if (checkLogined() == true) {
                     #p_scents a,#asset_list a{                    
                         display:inline;
                     }
-                    .asset_type,#bench,.asset{
+                    .asset_type,#benchSelecter,.asset{
                         display:inline;
                     }
                 </style>
@@ -99,7 +99,7 @@ if (checkLogined() == true) {
                                     ?>
                                 </select>
                                 <?php $assets = $_SESSION['object']->getAssetByType($value['type']); ?>
-                                <select name="asset[]" class="asset" id="asset<?php echo $i; ?>"  onchange="showTimetableLink(this,'#timetable1');">
+                                <select name="asset[]" class="asset" id="asset<?php echo $i; ?>"  onchange="showTimetableLink(this,'#timetable<?php echo $i; ?>');">
                                     <?php
                                     foreach ($assets as $y) {
                                         if (strcmp($y['name'], $value['name']) == 0) {
@@ -111,7 +111,7 @@ if (checkLogined() == true) {
                                         }
                                     }
                                     ?>
-                                </select><a href="" id="timetable1" onclick=""></a></p>
+                                </select><a href="" id="timetable<?php echo $i; ?>" onclick=""></a></p>
                             <?php
                             $i++;
                         }

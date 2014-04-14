@@ -63,12 +63,12 @@ if (checkLogined() == true && $_SESSION['object']->getUserLevel() == 3) {
             <div id="map">
                 <img src="image/laboratory_map.png" width="452px" height="306px" alt="Laboratory map" usemap="#graphmap" id="map_image">
                 <map name="graphmap">
-                    <area shape="rect" coords="44.16,44.15,195.98,80.51" href="JavaScript:newPopup('functions/timetable.php?asset_id=1')" alt="Bench 1" id="bench_1" data-maphilight='<?php if(countBenchInUse(1)>0){ ?>{"alwaysOn":true,"fillColor":"F2C069"}<?php }?>'>
-                    <area shape="rect" coords="44.16,122.07,195.98,158.43" href="JavaScript:newPopup('functions/timetable.php?asset_id=11')" alt="Bench 2" id="bench_2" data-maphilight='<?php if(countBenchInUse(11)>0){ ?>{"alwaysOn":true,"fillColor":"F2C069"}<?php }?>'>
-                    <area shape="rect" coords="44.16,201.71,195.98,238.07" href="JavaScript:newPopup('functions/timetable.php?asset_id=14')" alt="abcde" id="abcde" data-maphilight='<?php if(countBenchInUse(14)>0){ ?>{"alwaysOn":true,"fillColor":"F2C069"}<?php }?>'>
-                    <area shape="rect" coords="251.8,44.15,403.62,80.51" href="JavaScript:newPopup('functions/timetable.php?asset_id=30')" alt="coffee" id="coffee" data-maphilight='<?php if(countBenchInUse(30)>0){ ?>{"alwaysOn":true,"fillColor":"F2C069"}<?php }?>'>
-                    <area shape="rect" coords="251.8,122.07,403.62,158.43" href="JavaScript:newPopup('functions/timetable.php?asset_id=5')" alt="hello" id="hello" data-maphilight='<?php if(countBenchInUse(5)>0){ ?>{"alwaysOn":true,"fillColor":"F2C069"}<?php }?>'>
-                    <area shape="rect" coords="251.8,201.71,403.62,238.07" href="JavaScript:newPopup('functions/timetable.php?asset_id=8')" alt="no.6" id="no6" data-maphilight='<?php if(countBenchInUse(8)>0){ ?>{"alwaysOn":true,"fillColor":"F2C069"}<?php }?>'>
+                    <area shape="rect" coords="44.16,44.15,195.98,80.51" href="JavaScript:newPopup('functions/timetable.php?asset_id=1')" alt="Bench 1" id="bench_1" data-maphilight='<?php if(countBenchInUse(1)>0){ ?>{"alwaysOn":true,"fillColor":"F25715"}<?php }?>'>
+                    <area shape="rect" coords="44.16,122.07,195.98,158.43" href="JavaScript:newPopup('functions/timetable.php?asset_id=11')" alt="Bench 2" id="bench_2" data-maphilight='<?php if(countBenchInUse(11)>0){ ?>{"alwaysOn":true,"fillColor":"F25715"}<?php }?>'>
+                    <area shape="rect" coords="44.16,201.71,195.98,238.07" href="JavaScript:newPopup('functions/timetable.php?asset_id=14')" alt="abcde" id="abcde" data-maphilight='<?php if(countBenchInUse(14)>0){ ?>{"alwaysOn":true,"fillColor":"F25715"}<?php }?>'>
+                    <area shape="rect" coords="251.8,44.15,403.62,80.51" href="JavaScript:newPopup('functions/timetable.php?asset_id=30')" alt="coffee" id="coffee" data-maphilight='<?php if(countBenchInUse(30)>0){ ?>{"alwaysOn":true,"fillColor":"F25715"}<?php }?>'>
+                    <area shape="rect" coords="251.8,122.07,403.62,158.43" href="JavaScript:newPopup('functions/timetable.php?asset_id=5')" alt="hello" id="hello" data-maphilight='<?php if(countBenchInUse(5)>0){ ?>{"alwaysOn":true,"fillColor":"F25715"}<?php }?>'>
+                    <area shape="rect" coords="251.8,201.71,403.62,238.07" href="JavaScript:newPopup('functions/timetable.php?asset_id=8')" alt="no.6" id="no6" data-maphilight='<?php if(countBenchInUse(8)>0){ ?>{"alwaysOn":true,"fillColor":"F25715"}<?php }?>'>
                 </map>
             </div>
             
